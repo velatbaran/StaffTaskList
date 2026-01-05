@@ -1,0 +1,251 @@
+﻿@model IEnumerable<TaskViewModel>
+
+@{
+    ViewData["Title"] = "Görev Listesi";
+
+    List<int?> extendedTaskId = ViewBag.ExtendedTaskIds as List<int?>;
+}
+
+<link href="~/datatable/buttons.datatables.css" rel="stylesheet" />
+<link href="~/datatable/responsive.datatables.min.css" rel="stylesheet" />
+<link href="~/datatable/datatables.min.css" rel="stylesheet" />
+
+<p>
+    <a asp-action="Create" class="btn btn-primary" title="Yeni Ekle">
+        <i class="fa-solid fa-plus"></i> Yeni Ekle
+    </a>
+</p>
+
+<style>
+    .table {
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 14px;
+        color: #333;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        .table th {
+            background: #f0f2f5;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            padding: 10px;
+            border-bottom: 2px solid #dcdfe3;
+        }
+
+        .table td {
+            font-size: 12px;
+            padding: 8px 10px;
+            vertical-align: middle;
+        }
+
+        /* Modern input stil */
+        .table input[type="text"] {
+            width: 95%;
+            padding: 6px 10px;
+            border: 1px solid #c4c7cc;
+            border-radius: 6px;
+            font-size: 12px;
+            background: #fff;
+            transition: all .25s ease;
+        }
+
+            /* Hover input */
+            .table input[type="text"]:hover {
+                border-color: #9ba0a8;
+                background: #fafafa;
+            }
+
+            /* Focus efekti */
+            .table input[type="text"]:focus {
+                outline: none;
+                border-color: #4a90e2;
+                box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+                background: #fff;
+            }
+
+        /* Satır hover */
+        .table tbody tr:hover {
+            background-color: #f7faff;
+        }
+
+    /* Butonlara küçük estetik dokunuş */
+    .btn-rounded {
+        border-radius: 6px !important;
+    }
+
+    /* Tablonun üst kenarına hafif gölge */
+    #myTable {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+</style>
+
+<table class="table table-bordered table-striped" id="myTable">
+    <thead>
+        <tr>    
+            <th style="font-size:12px">@Html.DisplayNameFor(m => m.Employee)</th>
+            <th style="font-size:12px">@Html.DisplayNameFor(m => m.PlaceGone)</th>
+            <th style="font-size:12px" style=" width:1%">@Html.DisplayNameFor(m => m.ArrivalDate)</th>
+            <th style="font-size:12px" style=" width:1%">@Html.DisplayNameFor(m => m.ActiveDepartureDate)</th>
+            <th class="text-left" style="font-size:12px; width:1%">@Html.DisplayNameFor(m => m.TotalDay)</th>
+            <th style="font-size:12px">@Html.DisplayNameFor(m => m.Description)</th>
+            <th style="font-size:12px">Tamamlandı Mı?</th>
+            <th style="font-size:12px" style=" width:1%">@Html.DisplayNameFor(m => m.CreatedDate)</th>
+            <th style="font-size:12px">İşlemler</th>
+        </tr>
+        <tr>
+            <th><input type="text" placeholder="Ara Personel" /></th>
+            <th><input type="text" placeholder="Ara Gidilen Yer" /></th>
+            <th><input type="text" placeholder="Ara Varış Tarihi" /></th>
+            <th><input type="text" placeholder="Ara Ayrılış Tarihi" /></th>
+            <th><input type="text" placeholder="Ara Toplam Gün" /></th>
+            <th><input type="text" placeholder="Ara Açıklama" /></th>
+            <th><input type="text" placeholder="Ara Tamamlandı Mı?" /></th>
+            <th><input type="text" placeholder="Ara Kayıt Tarihi" /></th>
+            <th></th> <!-- İşlemler sütunu filtre yok -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => item.Employee)</td>
+                <td>@Html.DisplayFor(m => item.PlaceGone)</td>
+                <td style=" width:1%">@Html.DisplayFor(m => item.ArrivalDate)</td>
+                <td style=" width:1%">@Html.DisplayFor(m => item.ActiveDepartureDate)</td>
+                <td class="text-left" style=" width:1%">@Html.DisplayFor(m => item.TotalDay)</td>
+                <td>@Html.DisplayFor(m => item.Description)</td>
+                <td>
+                    @if (item.ActiveDepartureDate < DateTime.Now.Date)
+                    {
+                        <span><i class="fa-solid fa-check"></i> Tamamlandı</span>
+                    }
+                    else
+                    {
+                        <span><i class="fa-solid fa-hourglass-half"></i> Bekliyor</span>
+                    }
+                </td>
+                <td style=" width:1%">@Html.DisplayFor(m => item.CreatedDate)</td>
+                <td>
+                    @if (item.ActiveDepartureDate < DateTime.Now.Date)
+                    {
+                        <a class="btn btn-warning btn-sm btn-rounded disabled" asp-action="Edit" asp-route-id="@item.Id" title="Güncelle">
+                            <i class="fa-solid fa-pen-to-square"></i> Güncelle
+                        </a>
+                        <a class="btn btn-success btn-sm btn-rounded disabled" asp-action="Extend" asp-route-id="@item.Id" title="Süre Uzat">
+                            <i class="fa-solid fa-wrench"></i> Süre Uzat
+                        </a>
+                        <button type="button" class="btn btn-danger btn-sm btn-rounded" disabled
+                                data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                data-file-id="@item.Id" data-file-name="@item.Employee" title="Sil">
+                            <i class="fa-solid fa-trash"></i> Sil
+                        </button>
+                    }
+                    else{
+                        <a class="btn btn-warning btn-sm btn-rounded" asp-action="Edit" asp-route-id="@item.Id" title="Güncelle">
+                            <i class="fa-solid fa-pen-to-square"></i> Güncelle
+                        </a>
+                        <a class="btn btn-success btn-sm btn-rounded" asp-action="Extend" asp-route-id="@item.Id" title="Süre Uzat">
+                            <i class="fa-solid fa-wrench"></i> Süre Uzat
+                        </a>
+                        <button type="button" class="btn btn-danger btn-sm btn-rounded"
+                                data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                data-file-id="@item.Id" data-file-name="@item.Employee" title="Sil">
+                            <i class="fa-solid fa-trash"></i> Sil
+                        </button>
+                    }
+
+                    @if (extendedTaskId.Contains(item.Id))
+                    {
+                    <a class="btn btn-secondary btn-sm btn-rounded"
+                           asp-action="ExtendedTasksOne"
+                       asp-route-id="@item.Id"
+                       title="Geçmiş">
+                        <i class="fa-solid fa-eye"></i> Geçmiş
+                    </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-action="Delete">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Silme Onayı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <strong id="fileName"></strong> silmek istediğine emin misin?
+                    <input type="hidden" name="id" id="fileId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-xmark" title="İptal"></i> İptal
+                    </button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm btn-rounded" title="Sil">
+                        <i class="fa-solid fa-trash"></i> Sil
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/datatable/datatables.min.js"></script>
+    <script src="~/datatable/datatables.responsive.min.js"></script>
+    <script src="~/datatable/datatables.buttons.min.js"></script>
+    <script src="~/datatable/buttons.html5.min.js"></script>
+    <script src="~/datatable/buttons.print.min.js"></script>
+    <script src="~/datatable/jszip.min.js"></script>
+    <script src="~/datatable/pdfmake.min.js"></script>
+    <script src="~/datatable/vfs_fonts.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Modal tetikleme
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                $('#fileId').val(button.data('file-id'));
+                $('#fileName').text(button.data('file-name'));
+            });
+
+            // DataTable başlat
+            var table = $('#myTable').DataTable({
+        dom: 'Brtip', // 'f' yani global search kaldırıldı, sadece tablo ve butonlar kalıyor. // B sondaysa butonlar altta
+            buttons: [
+                'copy', 'excel', 'csv', 'pdf', 'print'
+            ],
+                responsive: {
+                    details: { type: 'column' }
+                },
+                columnDefs: [
+                    { className: 'control', orderable: false, targets: 0 }, // + işareti başta
+                    { orderable: false, targets: -1 } // İşlemler sütunu
+                ],
+                                        responsive: {
+            details: { type: 'column', target: 0 }
+        },
+                order: [[1, 'asc']],
+                language: { url: '/datatable/tr.json' }
+            });
+
+            // Header altındaki inputlar ile kolon bazlı filtreleme
+            $('#myTable thead tr:eq(1) th').each(function (i) {
+                $('input', this).on('keyup change clear', function () {
+                    if (table.column(i).search() !== this.value) {
+                        table.column(i).search(this.value).draw();
+                    }
+                });
+            });
+        });
+    </script>
+}

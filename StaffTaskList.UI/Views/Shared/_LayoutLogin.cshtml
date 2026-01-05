@@ -1,0 +1,35 @@
+﻿@using NToastNotify
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Personel Görev Yönetimi - @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/template/vendors/feather/feather.css">
+    <link rel="stylesheet" href="~/template/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="~/template/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/template/css/vertical-layout-light/style.css">
+    <link href="~/lib/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/lib/fontawesome/css/all.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/images/makinaikmal.png" />
+</head>
+
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="~/template/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/template/js/off-canvas.js"></script>
+    <script src="~/template/js/hoverable-collapse.js"></script>
+    <script src="~/template/js/template.js"></script>
+    <script src="~/template/js/settings.js"></script>
+    <script src="~/template/js/todolist.js"></script>
+    @await Component.InvokeAsync("NToastNotify")
+</body>
+
+</html>

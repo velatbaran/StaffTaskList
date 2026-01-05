@@ -1,0 +1,164 @@
+﻿@model IEnumerable<TaskViewModel>
+
+@{
+    ViewData["Title"] = "Uzatılan Göreve Bağlı Tüm Aksiyonlar";
+}
+
+<link href="~/datatable/buttons.datatables.css" rel="stylesheet" />
+<link href="~/datatable/responsive.datatables.min.css" rel="stylesheet" />
+<link href="~/datatable/datatables.min.css" rel="stylesheet" />
+
+<style>
+    .table {
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 14px;
+        color: #333;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        .table th {
+            background: #f0f2f5;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            padding: 10px;
+            border-bottom: 2px solid #dcdfe3;
+        }
+
+        .table td {
+            font-size: 12px;
+            padding: 8px 10px;
+            vertical-align: middle;
+        }
+
+        /* Modern input stil */
+        .table input[type="text"] {
+            width: 95%;
+            padding: 6px 10px;
+            border: 1px solid #c4c7cc;
+            border-radius: 6px;
+            font-size: 12px;
+            background: #fff;
+            transition: all .25s ease;
+        }
+
+            /* Hover input */
+            .table input[type="text"]:hover {
+                border-color: #9ba0a8;
+                background: #fafafa;
+            }
+
+            /* Focus efekti */
+            .table input[type="text"]:focus {
+                outline: none;
+                border-color: #4a90e2;
+                box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+                background: #fff;
+            }
+
+        /* Satır hover */
+        .table tbody tr:hover {
+            background-color: #f7faff;
+        }
+
+    /* Butonlara küçük estetik dokunuş */
+    .btn-rounded {
+        border-radius: 6px !important;
+    }
+
+    /* Tablonun üst kenarına hafif gölge */
+    #myTable {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+</style>
+
+<table class="table table-bordered table-striped" id="myTable">
+    <thead>
+        <tr>
+            <th></th> <!-- control kolonu -->
+            <th>@Html.DisplayNameFor(m => m.Employee)</th>
+            <th>@Html.DisplayNameFor(m => m.PlaceGone)</th>
+            <th>@Html.DisplayNameFor(m => m.ArrivalDate)</th>
+            <th>@Html.DisplayNameFor(m => m.ActiveDepartureDate)</th>
+            <th>@Html.DisplayNameFor(m => m.TotalDay)</th>
+            <th>@Html.DisplayNameFor(m => m.Description)</th>
+            <th>@Html.DisplayNameFor(m => m.Created)</th>
+            <th>@Html.DisplayNameFor(m => m.CreatedDate)</th>
+        </tr>
+        <tr>
+            <th></th> <!-- control kolonu -->
+            <th><input type="text" placeholder="Ara Personel" /></th>
+            <th><input type="text" placeholder="Ara Gidilen Yer" /></th>
+            <th><input type="text" placeholder="Ara Varış Tarihi" /></th>
+            <th><input type="text" placeholder="Ara Ayrılış Tarihi" /></th>
+            <th><input type="text" placeholder="Ara Toplam Gün" /></th>
+            <th><input type="text" placeholder="Ara Açıklama" /></th>
+            <th><input type="text" placeholder="Ara Kaydeden" /></th>
+            <th><input type="text" placeholder="Ara Kayıt Tarihi" /></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td></td> <!-- control kolonu -->
+                <td>@Html.DisplayFor(m => item.Employee)</td>
+                <td>@Html.DisplayFor(m => item.PlaceGone)</td>
+                <td>@Html.DisplayFor(m => item.ArrivalDate)</td>
+                <td>@Html.DisplayFor(m => item.ActiveDepartureDate)</td>
+                <td class="text-left">@Html.DisplayFor(m => item.TotalDay)</td>
+                <td>@Html.DisplayFor(m => item.Description)</td>
+                <td>@Html.DisplayFor(m => item.Created)</td>
+                <td>@Html.DisplayFor(m => item.CreatedDate)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/datatable/datatables.min.js"></script>
+    <script src="~/datatable/datatables.responsive.min.js"></script>
+    <script src="~/datatable/datatables.buttons.min.js"></script>
+    <script src="~/datatable/buttons.html5.min.js"></script>
+    <script src="~/datatable/buttons.print.min.js"></script>
+    <script src="~/datatable/jszip.min.js"></script>
+    <script src="~/datatable/pdfmake.min.js"></script>
+    <script src="~/datatable/vfs_fonts.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+                       // DataTable başlat
+            var table = $('#myTable').DataTable({
+        dom: 'Brtip', // 'f' yani global search kaldırıldı, sadece tablo ve butonlar kalıyor. // B sondaysa butonlar altta
+            buttons: [
+                'copy', 'excel', 'csv', 'pdf', 'print'
+            ],
+                responsive: {
+                    details: { type: 'column' }
+                },
+                columnDefs: [
+                    { className: 'control', orderable: false, targets: 0 }, // + işareti başta
+                    { orderable: false, targets: -1 } // İşlemler sütunu
+                ],
+                        responsive: {
+            details: { type: 'column', target: 0 }
+        },
+                order: [[1, 'asc']],
+                language: { url: '/datatable/tr.json' }
+            });
+
+            // Header altındaki inputlar ile kolon bazlı filtreleme
+            $('#myTable thead tr:eq(1) th').each(function (i) {
+                $('input', this).on('keyup change clear', function () {
+                    if (table.column(i).search() !== this.value) {
+                        table.column(i).search(this.value).draw();
+                    }
+                });
+            });
+        });
+    </script>
+}
