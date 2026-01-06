@@ -131,23 +131,22 @@
     <script>
         $(document).ready(function () {
 
-                       // DataTable başlat
+            // DataTable başlat
             var table = $('#myTable').DataTable({
-        dom: 'Brtip', // 'f' yani global search kaldırıldı, sadece tablo ve butonlar kalıyor. // B sondaysa butonlar altta
-            buttons: [
-                'copy', 'excel', 'csv', 'pdf', 'print'
-            ],
+                dom: 'Brtip',
+                buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
+
+                ordering: false, // 🔴 EN KRİTİK SATIR (Controller sıralaması korunur)
+
                 responsive: {
-                    details: { type: 'column' }
+                    details: { type: 'column', target: 0 }
                 },
+
                 columnDefs: [
-                    { className: 'control', orderable: false, targets: 0 }, // + işareti başta
-                    { orderable: false, targets: -1 } // İşlemler sütunu
+                    { className: 'control', orderable: false, targets: 0 }, // + kolonu
+                    { orderable: false, targets: -1 } // İşlemler kolonu
                 ],
-                        responsive: {
-            details: { type: 'column', target: 0 }
-        },
-                order: [[1, 'asc']],
+
                 language: { url: '/datatable/tr.json' }
             });
 
@@ -161,4 +160,5 @@
             });
         });
     </script>
+
 }
