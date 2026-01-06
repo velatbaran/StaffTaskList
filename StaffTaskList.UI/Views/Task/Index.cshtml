@@ -12,7 +12,7 @@
 
 <p>
     <a asp-action="Create" class="btn btn-primary" title="Yeni Ekle">
-        <i class="fa-solid fa-plus"></i> Yeni Ekle
+        <i class="fa-solid fa-plus mr-2"></i>Yeni Ekle
     </a>
 </p>
 
@@ -86,6 +86,7 @@
 <table class="table table-bordered table-striped" id="myTable">
     <thead>
         <tr>    
+            <th></th>
             <th style="font-size:12px">@Html.DisplayNameFor(m => m.Employee)</th>
             <th style="font-size:12px">@Html.DisplayNameFor(m => m.PlaceGone)</th>
             <th style="font-size:12px" style=" width:1%">@Html.DisplayNameFor(m => m.ArrivalDate)</th>
@@ -97,6 +98,7 @@
             <th style="font-size:12px">İşlemler</th>
         </tr>
         <tr>
+            <th></th>
             <th><input type="text" placeholder="Ara Personel" /></th>
             <th><input type="text" placeholder="Ara Gidilen Yer" /></th>
             <th><input type="text" placeholder="Ara Varış Tarihi" /></th>
@@ -108,10 +110,12 @@
             <th></th> <!-- İşlemler sütunu filtre yok -->
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
+                <td></td>
                 <td>@Html.DisplayFor(m => item.Employee)</td>
                 <td>@Html.DisplayFor(m => item.PlaceGone)</td>
                 <td style=" width:1%">@Html.DisplayFor(m => item.ArrivalDate)</td>
