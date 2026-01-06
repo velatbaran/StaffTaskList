@@ -112,7 +112,7 @@
                     </a>
                     <button type="button" class="btn btn-danger btn-sm btn-rounded"
                             data-bs-toggle="modal" data-bs-target="#deleteModal"
-                            data-file-id="@item.Id" data-file-name="@item.NameSurname" title="Sil">
+                            data-file-id="@item.Id" data-file-name="@($"{item.NameSurname} personelini")" title="Sil">
                         <i class="fa-solid fa-trash"></i> Sil
                     </button>
                 </td>
@@ -156,9 +156,9 @@
     <script src="~/datatable/jszip.min.js"></script>
     <script src="~/datatable/pdfmake.min.js"></script>
     <script src="~/datatable/vfs_fonts.js"></script>
-
     <script>
         $(document).ready(function () {
+
             // Modal tetikleme
             $('#deleteModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
@@ -168,18 +168,20 @@
 
             // DataTable başlat
             var table = $('#myTable').DataTable({
-        dom: 'Brtip', // 'f' yani global search kaldırıldı, sadece tablo ve butonlar kalıyor. // B sondaysa butonlar altta
-            buttons: [
-                'copy', 'excel', 'csv', 'pdf', 'print'
-            ],
+                dom: 'Brtip',
+                buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
+
+                ordering: false, // 🔴 EN KRİTİK SATIR (Controller sıralaması korunur)
+
                 responsive: {
-                    details: { type: 'column' }
+                    details: { type: 'column', target: 0 }
                 },
+
                 columnDefs: [
-                    { className: 'control', orderable: false, targets: 0 }, // + işareti başta
-                    { orderable: false, targets: -1 } // İşlemler sütunu
+                    { className: 'control', orderable: false, targets: 0 }, // + kolonu
+                    { orderable: false, targets: -1 } // İşlemler kolonu
                 ],
-                order: [[1, 'asc']],
+
                 language: { url: '/datatable/tr.json' }
             });
 

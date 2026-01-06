@@ -157,7 +157,7 @@
                         </a>
                         <button type="button" class="btn btn-danger btn-sm btn-rounded"
                                 data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                data-file-id="@item.Id" data-file-name="@item.Employee" title="Sil">
+                                data-file-id="@item.Id" data-file-name="@($"{item.Employee} personelinin {item.PlaceGone} görevini")" title="Sil">
                             <i class="fa-solid fa-trash"></i> Sil
                         </button>
                     }
@@ -187,7 +187,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <strong id="fileName"></strong> silmek istediğine emin misin?
+                    <strong id="fileName"></strong> silmek istediğinize emin misiniz?
                     <input type="hidden" name="id" id="fileId" />
                 </div>
                 <div class="modal-footer">
