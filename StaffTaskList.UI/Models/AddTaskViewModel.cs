@@ -10,10 +10,10 @@ namespace StaffTaskList.UI.Models
         [DisplayName("Personel")]
         public int? EmployeeId { get; set; }
 
-        [DisplayName("Gidilen Yer"), StringLength(50,ErrorMessage =" Max. {0} karakter olmalıdır."),Required(ErrorMessage ="{0} alanı boşgeçilemez!")]
+        [DisplayName("Gidilen Yer"), StringLength(50,ErrorMessage =" Max. {0} karakter olmalıdır."),Required(ErrorMessage ="{0} alanı boş geçilemez!")]
         public string PlaceGone { get; set; }
 
-        [DisplayName("Varış Tarihi"), Required(ErrorMessage = "{0} alanı boşgeçilemez!")]
+        [DisplayName("Varış Tarihi"), Required(ErrorMessage = "{0} alanı boş geçilemez!")]
         public DateTime ArrivalDate { get; set; }
 
         [DisplayName("Açıklama")]
@@ -22,7 +22,7 @@ namespace StaffTaskList.UI.Models
         //[DisplayName("Aktif Ayrılış Tarihi")]
         //public DateTime? ActiveDepartureDate { get; set; }
 
-        [DisplayName("Ayrılış Tarihi"), Required(ErrorMessage = "{0} alanı boşgeçilemez!")]
+        [DisplayName("Ayrılış Tarihi"), Required(ErrorMessage = "{0} alanı boş geçilemez!")]
         public DateTime NewDepartureDate { get; set; }
 
 

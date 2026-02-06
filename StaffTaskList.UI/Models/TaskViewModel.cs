@@ -17,7 +17,7 @@ namespace StaffTaskList.UI.Models
         public string PlaceGone { get; set; }
 
         [DisplayName("Açıklama")]
-        public string? Description { get; set; }
+        public string? ActiveDescription { get; set; }
 
         [DisplayName("Varış Tarihi")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = false)]

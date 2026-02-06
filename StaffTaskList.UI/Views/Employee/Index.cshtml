@@ -156,7 +156,24 @@
     <script src="~/datatable/jszip.min.js"></script>
     <script src="~/datatable/pdfmake.min.js"></script>
     <script src="~/datatable/vfs_fonts.js"></script>
+
     <script>
+        // 🔹 Türkçe normalize fonksiyonu
+        function normalizeTr(text) {
+            if (!text) return "";
+
+            return text.toString()
+                .toLowerCase()
+                .replace(/ı/g, "i")
+                .replace(/İ/g, "i")
+                .replace(/i̇/g, "i")
+                .replace(/ğ/g, "g")
+                .replace(/ü/g, "u")
+                .replace(/ş/g, "s")
+                .replace(/ö/g, "o")
+                .replace(/ç/g, "c");
+        }
+
         $(document).ready(function () {
 
             // Modal tetikleme
@@ -166,32 +183,42 @@
                 $('#fileName').text(button.data('file-name'));
             });
 
+            // 🔹 Türkçe uyumlu custom search
+            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+
+                var employeeInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(1) input').val());
+                var placeGoneInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(2) input').val());
+                var descriptionInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(6) input').val());
+
+                var rowEmployee = normalizeTr(data[1]);   // Personel
+                var rowPlaceGone = normalizeTr(data[2]);  // Gidilen Yer
+                var rowDescription = normalizeTr(data[6]); // Açıklama
+
+                if (employeeInput && !rowEmployee.includes(employeeInput)) return false;
+                if (placeGoneInput && !rowPlaceGone.includes(placeGoneInput)) return false;
+                if (descriptionInput && !rowDescription.includes(descriptionInput)) return false;
+
+                return true;
+            });
+
             // DataTable başlat
             var table = $('#myTable').DataTable({
                 dom: 'Brtip',
                 buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
-
-                ordering: false, // 🔴 EN KRİTİK SATIR (Controller sıralaması korunur)
-
+                ordering: false,
                 responsive: {
                     details: { type: 'column', target: 0 }
                 },
-
                 columnDefs: [
-                    { className: 'control', orderable: false, targets: 0 }, // + kolonu
-                    { orderable: false, targets: -1 } // İşlemler kolonu
+                    { className: 'control', orderable: false, targets: 0 },
+                    { orderable: false, targets: -1 }
                 ],
-
                 language: { url: '/datatable/tr.json' }
             });
 
-            // Header altındaki inputlar ile kolon bazlı filtreleme
-            $('#myTable thead tr:eq(1) th').each(function (i) {
-                $('input', this).on('keyup change clear', function () {
-                    if (table.column(i).search() !== this.value) {
-                        table.column(i).search(this.value).draw();
-                    }
-                });
+            // 🔹 Input değişince sadece draw çağır
+            $('#myTable thead tr:eq(1) th input').on('keyup change clear', function () {
+                table.draw();
             });
         });
     </script>

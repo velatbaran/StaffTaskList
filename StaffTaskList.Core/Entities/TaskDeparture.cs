@@ -20,5 +20,8 @@ namespace StaffTaskList.Core.Entities
 
         [DisplayName("Ayrılış Tarihi")]
         public DateTime DepartureDate { get; set; }
+
+        [DisplayName("Açıklama")]
+        public string? Description { get; set; }
     }
 }

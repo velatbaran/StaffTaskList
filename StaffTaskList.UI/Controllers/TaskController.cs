@@ -48,7 +48,7 @@ namespace StaffTaskList.UI.Controllers
                                                 PlaceGone = v.Task.PlaceGone,
                                                 ArrivalDate = v.Task.ArrivalDate,
                                                 ActiveDepartureDate = v.DepartureDate,
-                                                Description = v.Task.Description,
+                                                ActiveDescription = v.Description,
                                                 TotalDay = v.Task.TotalDay,
                                                 Created = v.Created,
                                                 CreatedDate = v.CreatedDate,
@@ -118,7 +118,7 @@ namespace StaffTaskList.UI.Controllers
                         PlaceGone = model.PlaceGone,
                         ArrivalDate = model.ArrivalDate,
                         TotalDay = totalDay,
-                        Description = model.Description,
+                      //  Description = model.Description,
                         //Created = model.Created,
                         //CreatedDate = DateTime.Now,
                     };
@@ -130,6 +130,7 @@ namespace StaffTaskList.UI.Controllers
                     {
                         TaskId = task.Id,
                         DepartureDate = model.NewDepartureDate,
+                        Description = model.Description,
                         IsActive = true,
                     };
 
@@ -179,7 +180,7 @@ namespace StaffTaskList.UI.Controllers
                 EmployeeId = taskdeparture.Task.EmployeeId,
                 PlaceGone = taskdeparture.Task.PlaceGone,
                 ArrivalDate = taskdeparture.Task.ArrivalDate,
-                Description = taskdeparture.Task.Description,
+                Description = taskdeparture.Description,
                 NewDepartureDate = taskdeparture.DepartureDate,
             };
             ViewBag.Employee = new SelectList(_repoEmployee.GetAll(), "Id", "NameSurname", taskdeparture.Task.EmployeeId);
@@ -220,12 +221,13 @@ namespace StaffTaskList.UI.Controllers
                     task.PlaceGone = model.PlaceGone;
                     task.ArrivalDate = model.ArrivalDate;
                     task.TotalDay = totalDay;
-                    task.Description = model.Description;
+                 //   task.Description = model.Description;
                     _repoTask.Update(task);
                    await _repoTask.SaveChangesAsync();
 
                     //     taskdeparture.TaskId = task.Id;
                     taskdeparture.DepartureDate = model.NewDepartureDate;
+                    taskdeparture.Description = model.Description;
                     //     taskdeparture.IsActive = true;
                     _repoTaskDeparture.Update(taskdeparture);
                     await _repoTaskDeparture.SaveChangesAsync();
@@ -270,7 +272,7 @@ namespace StaffTaskList.UI.Controllers
                 PlaceGone = taskdeparture.Task.PlaceGone,
                 ArrivalDate = taskdeparture.Task.ArrivalDate,
                 NewDepartureDate = taskdeparture.DepartureDate,
-                Description = taskdeparture.Task.Description,
+                Description = taskdeparture.Description,
             };
             ViewBag.Employee = new SelectList(_repoEmployee.GetAll(), "Id", "NameSurname", taskdeparture.Task.EmployeeId);
             return View(_task);
@@ -308,7 +310,7 @@ namespace StaffTaskList.UI.Controllers
                     var taskdeparture = await _repoTaskDeparture.GetQueryable().Include("Task").Where(x => x.TaskId == id.Value && x.IsActive == true).FirstOrDefaultAsync();
 
                     task.TotalDay = totalDay;
-                    task.Description = model.Description;
+               //     task.Description = model.Description;
                     _repoTask.Update(task);
                     await _repoTask.SaveChangesAsync();
 
@@ -322,6 +324,7 @@ namespace StaffTaskList.UI.Controllers
                     {
                         TaskId = task.Id,
                         DepartureDate = model.NewDepartureDate,
+                        Description = model.Description,
                         IsActive = true,
                     };
 
@@ -381,7 +384,7 @@ namespace StaffTaskList.UI.Controllers
                     PlaceGone = v.Task.PlaceGone,
                     ArrivalDate = v.Task.ArrivalDate,
                     ActiveDepartureDate = v.DepartureDate,
-                    Description = v.Task.Description,
+                    ActiveDescription = v.Description,
                     TotalDay = CalculateTotalDay(v.Task.ArrivalDate, v.DepartureDate),
                     Created = v.Created,
                     CreatedDate = v.CreatedDate,
@@ -413,7 +416,7 @@ namespace StaffTaskList.UI.Controllers
                     PlaceGone = v.Task.PlaceGone,
                     ArrivalDate = v.Task.ArrivalDate,
                     ActiveDepartureDate = v.DepartureDate,
-                    Description = v.Task.Description,
+                    ActiveDescription = v.Description,
                     TotalDay = CalculateTotalDay(v.Task.ArrivalDate,v.DepartureDate),
                     Created = v.Created,
                     CreatedDate = v.CreatedDate,
@@ -445,7 +448,7 @@ namespace StaffTaskList.UI.Controllers
                     PlaceGone = v.Task.PlaceGone,
                     ArrivalDate = v.Task.ArrivalDate,
                     ActiveDepartureDate = v.DepartureDate,
-                    Description = v.Task.Description,
+                    ActiveDescription = v.Description,
                     TotalDay = v.Task.TotalDay,
                     Created = v.Created,
                     CreatedDate = v.CreatedDate,

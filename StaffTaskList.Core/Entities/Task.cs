@@ -24,8 +24,8 @@ namespace StaffTaskList.Core.Entities
         [DisplayName("Varış Tarihi")]
         public DateTime ArrivalDate { get; set; }
 
-        [DisplayName("Açıklama")]
-        public string? Description { get; set; }
+        //[DisplayName("Açıklama")]
+        //public string? Description { get; set; }
 
         public ICollection<TaskDeparture>? TaskDepartures { get; set; }
         public Task()
