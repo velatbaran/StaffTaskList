@@ -164,7 +164,7 @@
 
                     @if (extendedTaskId.Contains(item.Id))
                     {
-                    <a class="btn btn-secondary btn-sm btn-rounded"
+                    <a class="btn btn-primary btn-sm btn-rounded"
                            asp-action="ExtendedTasksOne"
                        asp-route-id="@item.Id"
                        title="Geçmiş">
@@ -244,14 +244,23 @@
 
                 var employeeInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(1) input').val());
                 var placeGoneInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(2) input').val());
+                var arrivalDateInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(3) input').val());
+                var activeDepartureDateInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(4) input').val());
+                var totalDayInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(5) input').val());
                 var descriptionInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(6) input').val());
 
                 var rowEmployee = normalizeTr(data[1]);   // Personel
                 var rowPlaceGone = normalizeTr(data[2]);  // Gidilen Yer
+                var rowArrivalDate = normalizeTr(data[3]);  // Varış Tarihi
+                var rowActiveDepartureDate = normalizeTr(data[4]);  // Aktif Ayrılış Tarihi
+                var rowTotalDay = normalizeTr(data[5]);  // Toplam Gün
                 var rowDescription = normalizeTr(data[6]); // Açıklama
 
                 if (employeeInput && !rowEmployee.includes(employeeInput)) return false;
                 if (placeGoneInput && !rowPlaceGone.includes(placeGoneInput)) return false;
+                if (arrivalDateInput && !rowArrivalDate.includes(arrivalDateInput)) return false;
+                if (activeDepartureDateInput && !rowActiveDepartureDate.includes(activeDepartureDateInput)) return false;
+                if (totalDayInput && !rowTotalDay.includes(totalDayInput)) return false;
                 if (descriptionInput && !rowDescription.includes(descriptionInput)) return false;
 
                 return true;

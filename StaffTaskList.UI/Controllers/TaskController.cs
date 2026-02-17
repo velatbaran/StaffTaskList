@@ -367,31 +367,44 @@ namespace StaffTaskList.UI.Controllers
         public async Task<IActionResult> ExtendedTasks()
         {
             // 1️⃣ Uzatma yapılmış TaskId'leri bul
-            var extendedTaskIds = _repoTaskDeparture.GetQueryable()
+            var extensionCounts = _repoTaskDeparture.GetQueryable()
                 .GroupBy(x => x.TaskId)
                 .Where(g => g.Count() > 1)
-                .Select(g => g.Key);
+                .Select(g => new
+                {
+                    TaskId = g.Key,
+                    ExtensionCount = g.Count() // toplam aksiyon sayısı
+                });
+
 
             // 2️⃣ Bu TaskId'lere ait TÜM TaskDeparture kayıtlarını getir
             var tasks = await _repoTaskDeparture.GetQueryable()
                 .Include(x => x.Task)
                     .ThenInclude(t => t.Employee)
-                .Where(x => extendedTaskIds.Contains(x.TaskId))
+                .Where(x => x.IsActive)
+                .Join(
+                    extensionCounts,
+                    td => td.TaskId,
+                    ec => ec.TaskId,
+                    (td, ec) => new { td, ec.ExtensionCount }
+                )
                 .Select(v => new TaskViewModel
                 {
-                    Id = v.Task.Id,
-                    Employee = v.Task.Employee.NameSurname,
-                    PlaceGone = v.Task.PlaceGone,
-                    ArrivalDate = v.Task.ArrivalDate,
-                    ActiveDepartureDate = v.DepartureDate,
-                    ActiveDescription = v.Description,
-                    TotalDay = CalculateTotalDay(v.Task.ArrivalDate, v.DepartureDate),
-                    Created = v.Created,
-                    CreatedDate = v.CreatedDate,
+                    Id = v.td.Task.Id,
+                    Employee = v.td.Task.Employee.NameSurname,
+                    PlaceGone = v.td.Task.PlaceGone,
+                    ArrivalDate = v.td.Task.ArrivalDate,
+                    ActiveDepartureDate = v.td.DepartureDate,
+                    ActiveDescription = v.td.Description,
+                    TotalDay = CalculateTotalDay(v.td.Task.ArrivalDate, v.td.DepartureDate),
+                    CreatedDate = v.td.CreatedDate,
+                    ExtensionCount = v.ExtensionCount 
                 })
-            .OrderByDescending(x => x.CreatedDate).ToListAsync();
+                .OrderByDescending(x => x.CreatedDate)
+                .ToListAsync();
 
             return View(tasks);
+
 
         }
 

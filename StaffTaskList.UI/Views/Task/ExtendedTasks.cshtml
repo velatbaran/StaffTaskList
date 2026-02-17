@@ -87,6 +87,7 @@
             <th>@Html.DisplayNameFor(m => m.ActiveDescription)</th>
             <th>@Html.DisplayNameFor(m => m.Created)</th>
             <th>@Html.DisplayNameFor(m => m.CreatedDate)</th>
+            <th>Aksiyon</th>
         </tr>
         <tr>
             <th></th> <!-- control kolonu -->
@@ -98,6 +99,7 @@
             <th><input type="text" placeholder="Ara Açıklama" /></th>
             <th><input type="text" placeholder="Ara Kaydeden" /></th>
             <th><input type="text" placeholder="Ara Kayıt Tarihi" /></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -113,6 +115,14 @@
                 <td>@Html.DisplayFor(m => item.ActiveDescription)</td>
                 <td>@Html.DisplayFor(m => item.Created)</td>
                 <td>@Html.DisplayFor(m => item.CreatedDate)</td>
+                <td>
+                    <a class="btn btn-warning btn-sm btn-rounded"
+                       asp-action="ExtendedTasksOne"
+                       asp-route-id="@item.Id" title="Geçmiş">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        Geçmiş (@item.ExtensionCount)
+                    </a>
+                </td>
             </tr>
         }
     </tbody>

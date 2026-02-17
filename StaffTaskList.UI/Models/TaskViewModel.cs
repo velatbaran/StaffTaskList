@@ -42,5 +42,7 @@ namespace StaffTaskList.UI.Models
 
         [DisplayName("Kayıt Tarihi")]
         public DateTime? CreatedDate { get; set; }
+
+        public int ExtensionCount { get; set; }
     }
 }
