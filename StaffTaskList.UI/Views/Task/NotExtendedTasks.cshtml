@@ -85,7 +85,6 @@
             <th>@Html.DisplayNameFor(m => m.ActiveDepartureDate)</th>
             <th>@Html.DisplayNameFor(m => m.TotalDay)</th>
             <th>@Html.DisplayNameFor(m => m.ActiveDescription)</th>
-            <th>@Html.DisplayNameFor(m => m.Created)</th>
             <th>@Html.DisplayNameFor(m => m.CreatedDate)</th>
         </tr>
         <tr>
@@ -96,7 +95,6 @@
             <th><input type="text" placeholder="Ara Ayrılış Tarihi" /></th>
             <th><input type="text" placeholder="Ara Toplam Gün" /></th>
             <th><input type="text" placeholder="Ara Açıklama" /></th>
-            <th><input type="text" placeholder="Ara Kaydeden" /></th>
             <th><input type="text" placeholder="Ara Kayıt Tarihi" /></th>
         </tr>
     </thead>
@@ -111,7 +109,6 @@
                 <td>@Html.DisplayFor(m => item.ActiveDepartureDate)</td>
                 <td class="text-left">@Html.DisplayFor(m => item.TotalDay)</td>
                 <td>@Html.DisplayFor(m => item.ActiveDescription)</td>
-                <td>@Html.DisplayFor(m => item.Created)</td>
                 <td>@Html.DisplayFor(m => item.CreatedDate)</td>
             </tr>
         }

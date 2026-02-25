@@ -248,6 +248,8 @@
                 var activeDepartureDateInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(4) input').val());
                 var totalDayInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(5) input').val());
                 var descriptionInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(6) input').val());
+                var isCompleted = normalizeTr($('#myTable thead tr:eq(1) th:eq(7) input').val());
+                var createdDate = normalizeTr($('#myTable thead tr:eq(1) th:eq(8) input').val());
 
                 var rowEmployee = normalizeTr(data[1]);   // Personel
                 var rowPlaceGone = normalizeTr(data[2]);  // Gidilen Yer
@@ -255,6 +257,8 @@
                 var rowActiveDepartureDate = normalizeTr(data[4]);  // Aktif Ayrılış Tarihi
                 var rowTotalDay = normalizeTr(data[5]);  // Toplam Gün
                 var rowDescription = normalizeTr(data[6]); // Açıklama
+                var rowIsCompleted = normalizeTr(data[7]); // Tamamlandı  Mı?
+                var rowCreatedDate = normalizeTr(data[8]); // Tamamlandı  Mı?
 
                 if (employeeInput && !rowEmployee.includes(employeeInput)) return false;
                 if (placeGoneInput && !rowPlaceGone.includes(placeGoneInput)) return false;
@@ -262,6 +266,8 @@
                 if (activeDepartureDateInput && !rowActiveDepartureDate.includes(activeDepartureDateInput)) return false;
                 if (totalDayInput && !rowTotalDay.includes(totalDayInput)) return false;
                 if (descriptionInput && !rowDescription.includes(descriptionInput)) return false;
+                if (isCompleted && !rowIsCompleted.includes(isCompleted)) return false;
+                if (createdDate && !rowCreatedDate.includes(createdDate)) return false;
 
                 return true;
             });
