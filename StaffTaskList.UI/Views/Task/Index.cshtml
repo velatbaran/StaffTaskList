@@ -85,7 +85,7 @@
 
 <table class="table table-bordered table-striped" id="myTable">
     <thead>
-        <tr>    
+        <tr>
             <th></th>
             <th style="font-size:12px">@Html.DisplayNameFor(m => m.Employee)</th>
             <th style="font-size:12px">@Html.DisplayNameFor(m => m.PlaceGone)</th>
@@ -136,19 +136,26 @@
                 <td>
                     @if (item.ActiveDepartureDate < DateTime.Now.Date)
                     {
-                        <a class="btn btn-warning btn-sm btn-rounded disabled" asp-action="Edit" asp-route-id="@item.Id" title="Güncelle">
-                            <i class="fa-solid fa-pen-to-square"></i> Güncelle
-                        </a>
-                        <a class="btn btn-success btn-sm btn-rounded disabled" asp-action="Extend" asp-route-id="@item.Id" title="Süre Uzat">
-                            <i class="fa-solid fa-wrench"></i> Süre Uzat
-                        </a>
-                        <button type="button" class="btn btn-danger btn-sm btn-rounded" disabled
-                                data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                data-file-id="@item.Id" data-file-name="@item.Employee" title="Sil">
-                            <i class="fa-solid fa-trash"></i> Sil
-                        </button>
+                        <span title="Süreç tamamlandığı için güncelleme işlemi yapılamaz.">
+                            <a class="btn btn-warning btn-sm btn-rounded disabled" asp-action="Edit" asp-route-id="@item.Id">
+                                <i class="fa-solid fa-pen-to-square"></i> Güncelle
+                            </a>
+                        </span>
+                        <span title="Süreç tamamlandığı için süre uzatma işlemi yapılamaz.">
+                            <a class="btn btn-success btn-sm btn-rounded disabled" asp-action="Extend" asp-route-id="@item.Id" title="Süreç tamamlandığı için süre uzatma işlemi yapılamaz.">
+                                <i class="fa-solid fa-wrench"></i> Süre Uzat
+                            </a>
+                        </span>
+                        <span title="Süreç tamamlandığı için silme işlemi yapılamaz.">
+                            <button type="button" class="btn btn-danger btn-sm btn-rounded" disabled
+                                    data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                    data-file-id="@item.Id" data-file-name="@item.Employee" title="Süreç tamamlandığı için silme işlemi yapılamaz.">
+                                <i class="fa-solid fa-trash"></i> Sil
+                            </button>
+                        </span>
                     }
-                    else{
+                    else
+                    {
                         <a class="btn btn-warning btn-sm btn-rounded" asp-action="Edit" asp-route-id="@item.Id" title="Güncelle">
                             <i class="fa-solid fa-pen-to-square"></i> Güncelle
                         </a>
@@ -164,12 +171,12 @@
 
                     @if (extendedTaskId.Contains(item.Id))
                     {
-                    <a class="btn btn-primary btn-sm btn-rounded"
+                        <a class="btn btn-primary btn-sm btn-rounded"
                            asp-action="ExtendedTasksOne"
-                       asp-route-id="@item.Id"
-                       title="Geçmiş">
-                        <i class="fa-solid fa-eye"></i> Geçmiş
-                    </a>
+                           asp-route-id="@item.Id"
+                           title="Geçmiş">
+                            <i class="fa-solid fa-eye"></i> Geçmiş
+                        </a>
                     }
                 </td>
             </tr>
