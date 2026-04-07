@@ -320,7 +320,7 @@ namespace StaffTaskList.UI.Controllers
                     _repoTaskDeparture.Update(taskdeparture);
                     await _repoTaskDeparture.SaveChangesAsync();
 
-                    var extendTaskDeoarture = new TaskDeparture()
+                    var extendTaskDepoarture = new TaskDeparture()
                     {
                         TaskId = task.Id,
                         DepartureDate = model.NewDepartureDate,
@@ -328,7 +328,7 @@ namespace StaffTaskList.UI.Controllers
                         IsActive = true,
                     };
 
-                    _repoTaskDeparture.Add(extendTaskDeoarture);
+                    _repoTaskDeparture.Add(extendTaskDepoarture);
                     await _repoTaskDeparture.SaveChangesAsync();
 
                     _toastNotification.AddSuccessToastMessage("Görev uzatma işlemi başarılı", new ToastrOptions { Title = "Görev Uzatma" });
