@@ -397,6 +397,7 @@ namespace StaffTaskList.UI.Controllers
                     ActiveDepartureDate = v.td.DepartureDate,
                     ActiveDescription = v.td.Description,
                     TotalDay = CalculateTotalDay(v.td.Task.ArrivalDate, v.td.DepartureDate),
+                    IsActive = v.td.IsActive,
                     CreatedDate = v.td.CreatedDate,
                     ExtensionCount = v.ExtensionCount 
                 })
@@ -431,6 +432,7 @@ namespace StaffTaskList.UI.Controllers
                     ActiveDepartureDate = v.DepartureDate,
                     ActiveDescription = v.Description,
                     TotalDay = CalculateTotalDay(v.Task.ArrivalDate,v.DepartureDate),
+                    IsActive = v.IsActive,
                     Created = v.Created,
                     CreatedDate = v.CreatedDate,
                 })
@@ -463,6 +465,7 @@ namespace StaffTaskList.UI.Controllers
                     ActiveDepartureDate = v.DepartureDate,
                     ActiveDescription = v.Description,
                     TotalDay = v.Task.TotalDay,
+                    IsActive = v.IsActive,
                     Created = v.Created,
                     CreatedDate = v.CreatedDate,
                 })

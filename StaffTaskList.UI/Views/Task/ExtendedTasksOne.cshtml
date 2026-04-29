@@ -128,23 +128,25 @@
     <script>
         $(document).ready(function () {
 
-            // DataTable başlat
             var table = $('#myTable').DataTable({
                 dom: 'Brtip',
                 buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
-
-                ordering: false, // 🔴 EN KRİTİK SATIR (Controller sıralaması korunur)
-
+                ordering: false,
+            paging: true,    // 🔥 OLMALI
+            pageLength: 10,
+            info: true,
                 responsive: {
                     details: { type: 'column', target: 0 }
                 },
-
                 columnDefs: [
-                    { className: 'control', orderable: false, targets: 0 }, // + kolonu
-                    { orderable: false, targets: -1 } // İşlemler kolonu
+                    { className: 'control', orderable: false, targets: 0 },
+                    { orderable: false, targets: -1 }
                 ],
+                language: { url: '/datatable/tr.json' },
 
-                language: { url: '/datatable/tr.json' }
+            initComplete: function () {
+                $('#loadingOverlay').fadeOut(200);
+            }
             });
 
             // Header altındaki inputlar ile kolon bazlı filtreleme

@@ -42,12 +42,41 @@
             line-height: 1.4;
         }
 
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.85);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #ddd;
+            border-top: 4px solid #4a90e2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @@keyframes spin {
+            100%
+
+        {
+            transform: rotate(360deg);
+        }
+
+        }
 
     </style>
 
 </head>
 <body>
-
     <div class="container-scroller">
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -138,6 +167,12 @@
                             <h2>@ViewData["Title"]</h2>
                         </div>
                     </div>
+                    <div id="loadingOverlay">
+                        <div class="loader-content">
+                            <div class="spinner"></div>
+                            <div>Yükleniyor...</div>
+                        </div>
+                    </div>
                     @RenderBody()
                 </div>
                 <footer class="footer">
@@ -152,6 +187,7 @@
         <!-- page-body-wrapper ends -->
     </div>
 
+    <script src="~/lib/jquery-3.6.0.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/template/vendors/js/vendor.bundle.base.js"></script>
@@ -163,7 +199,6 @@
     <script src="~/template/js/todolist.js"></script>
     <script src="~/template/js/dashboard.js"></script>
     <script src="~/template/js/Chart.roundedBarCharts.js"></script>
-    <script src="~/lib/jquery-3.6.0.min.js"></script>
     <link href="~/lib/select2.min.css" rel="stylesheet" />
     <script src="~/lib/select2.min.js"></script>
 
@@ -200,6 +235,15 @@
             });
 
         };
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            // fallback: sayfa hazırsa gizle
+            $('#loadingOverlay').fadeOut(150);
+
+        });
     </script>
 
     @RenderSection("Scripts", required: false)

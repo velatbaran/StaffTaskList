@@ -186,40 +186,48 @@
             // 🔹 Türkçe uyumlu custom search
             $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 
-                var employeeInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(1) input').val());
-                var placeGoneInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(2) input').val());
-                var descriptionInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(6) input').val());
+                var nameSurnameInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(1) input').val());
+                var PositionInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(2) input').val());
+                var createdDateInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(3) input').val());
 
-                var rowEmployee = normalizeTr(data[1]);   // Personel
-                var rowPlaceGone = normalizeTr(data[2]);  // Gidilen Yer
-                var rowDescription = normalizeTr(data[6]); // Açıklama
+                var rowNameSurname = normalizeTr(data[1]);   // ad soyad
+                var rowPosition = normalizeTr(data[2]);  // pozisyon
+                var rowCreatedDate = normalizeTr(data[3]); // kayıt tarih
 
-                if (employeeInput && !rowEmployee.includes(employeeInput)) return false;
-                if (placeGoneInput && !rowPlaceGone.includes(placeGoneInput)) return false;
-                if (descriptionInput && !rowDescription.includes(descriptionInput)) return false;
+                if (nameSurnameInput && !rowNameSurname.includes(nameSurnameInput)) return false;
+                if (PositionInput && !rowPosition.includes(PositionInput)) return false;
+                if (createdDateInput && !rowCreatedDate.includes(createdDateInput)) return false;
 
                 return true;
             });
 
             // DataTable başlat
-            var table = $('#myTable').DataTable({
-                dom: 'Brtip',
-                buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
-                ordering: false,
-                responsive: {
-                    details: { type: 'column', target: 0 }
-                },
-                columnDefs: [
-                    { className: 'control', orderable: false, targets: 0 },
-                    { orderable: false, targets: -1 }
-                ],
-                language: { url: '/datatable/tr.json' }
-            });
+        var table = $('#myTable').DataTable({
+            dom: 'Brtip',
+            buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
+            ordering: false,
+        paging: true,    // 🔥 OLMALI
+        pageLength: 10,
+        info: true,
+            responsive: {
+                details: { type: 'column', target: 0 }
+            },
+            columnDefs: [
+                { className: 'control', orderable: false, targets: 0 },
+                { orderable: false, targets: -1 }
+            ],
+            language: { url: '/datatable/tr.json' },
+
+        initComplete: function () {
+            $('#loadingOverlay').fadeOut(200);
+        }
+        });
 
             // 🔹 Input değişince sadece draw çağır
             $('#myTable thead tr:eq(1) th input').on('keyup change clear', function () {
                 table.draw();
             });
+
         });
     </script>
 }

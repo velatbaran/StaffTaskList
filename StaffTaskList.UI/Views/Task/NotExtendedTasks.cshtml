@@ -126,35 +126,79 @@
     <script src="~/datatable/vfs_fonts.js"></script>
 
     <script>
+
+             function normalizeTr(text) {
+         if (!text) return "";
+
+         return text.toString()
+             .toLowerCase()
+             .replace(/ı/g, "i")
+             .replace(/İ/g, "i")
+             .replace(/i̇/g, "i")
+             .replace(/ğ/g, "g")
+             .replace(/ü/g, "u")
+             .replace(/ş/g, "s")
+             .replace(/ö/g, "o")
+             .replace(/ç/g, "c");
+     }
+
         $(document).ready(function () {
 
-            // DataTable başlat
-            var table = $('#myTable').DataTable({
-                dom: 'Brtip',
-                buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
+                            // 🔹 Türkçe uyumlu custom search
+                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 
-                ordering: false, // 🔴 EN KRİTİK SATIR (Controller sıralaması korunur)
+                    var employeeInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(1) input').val());
+                    var placeGoneInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(2) input').val());
+                    var arrivalDateInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(3) input').val());
+                    var activeDepartureDateInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(4) input').val());
+                    var totalDayInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(5) input').val());
+                    var descriptionInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(6) input').val());
+                    var createdDate = normalizeTr($('#myTable thead tr:eq(1) th:eq(7) input').val());
 
-                responsive: {
-                    details: { type: 'column', target: 0 }
-                },
+                    var rowEmployee = normalizeTr(data[1]);   // Personel
+                    var rowPlaceGone = normalizeTr(data[2]);  // Gidilen Yer
+                    var rowArrivalDate = normalizeTr(data[3]);  // Varış Tarihi
+                    var rowActiveDepartureDate = normalizeTr(data[4]);  // Aktif Ayrılış Tarihi
+                    var rowTotalDay = normalizeTr(data[5]);  // Toplam Gün
+                    var rowDescription = normalizeTr(data[6]); // Açıklama
+                    var rowCreatedDate = normalizeTr(data[7]); // Tamamlandı  Mı?
 
-                columnDefs: [
-                    { className: 'control', orderable: false, targets: 0 }, // + kolonu
-                    { orderable: false, targets: -1 } // İşlemler kolonu
-                ],
+                    if (employeeInput && !rowEmployee.includes(employeeInput)) return false;
+                    if (placeGoneInput && !rowPlaceGone.includes(placeGoneInput)) return false;
+                    if (arrivalDateInput && !rowArrivalDate.includes(arrivalDateInput)) return false;
+                    if (activeDepartureDateInput && !rowActiveDepartureDate.includes(activeDepartureDateInput)) return false;
+                    if (totalDayInput && !rowTotalDay.includes(totalDayInput)) return false;
+                    if (descriptionInput && !rowDescription.includes(descriptionInput)) return false;
+                    if (createdDate && !rowCreatedDate.includes(createdDate)) return false;
 
-                language: { url: '/datatable/tr.json' }
-            });
-
-            // Header altındaki inputlar ile kolon bazlı filtreleme
-            $('#myTable thead tr:eq(1) th').each(function (i) {
-                $('input', this).on('keyup change clear', function () {
-                    if (table.column(i).search() !== this.value) {
-                        table.column(i).search(this.value).draw();
-                    }
+                    return true;
                 });
-            });
+
+        var table = $('#myTable').DataTable({
+            dom: 'Brtip',
+            buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
+            ordering: false,
+        paging: true,    // 🔥 OLMALI
+        pageLength: 10,
+        info: true,
+            responsive: {
+                details: { type: 'column', target: 0 }
+            },
+            columnDefs: [
+                { className: 'control', orderable: false, targets: 0 },
+                { orderable: false, targets: -1 }
+            ],
+            language: { url: '/datatable/tr.json' },
+
+        initComplete: function () {
+            $('#loadingOverlay').fadeOut(200);
+        }
+        });
+
+                // 🔹 Input değişince sadece draw çağır
+                $('#myTable thead tr:eq(1) th input').on('keyup change clear', function () {
+                    table.draw();
+                });
         });
     </script>
 }

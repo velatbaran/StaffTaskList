@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using StaffTaskList.Core.Entities;
 using StaffTaskList.Service.IRepository;
@@ -21,7 +22,12 @@ namespace StaffTaskList.UI.Controllers
         [Route("personeller")]
         public IActionResult Index()
         {
-            return View(_repoEmployee.GetQueryable().OrderByDescending(c=>c.CreatedDate).ToList());
+            var data = _repoEmployee
+                .GetQueryable()
+                .OrderByDescending(x => x.CreatedDate)
+                .ToList();
+
+            return View(data);
         }
 
         [Route("personelekle")]

@@ -279,20 +279,26 @@
                 return true;
             });
 
-            // DataTable başlat
-            var table = $('#myTable').DataTable({
-                dom: 'Brtip',
-                buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
-                ordering: false,
-                responsive: {
-                    details: { type: 'column', target: 0 }
-                },
-                columnDefs: [
-                    { className: 'control', orderable: false, targets: 0 },
-                    { orderable: false, targets: -1 }
-                ],
-                language: { url: '/datatable/tr.json' }
-            });
+        var table = $('#myTable').DataTable({
+            dom: 'Brtip',
+            buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
+            ordering: false,
+        paging: true,    // 🔥 OLMALI
+        pageLength: 10,
+        info: true,
+            responsive: {
+                details: { type: 'column', target: 0 }
+            },
+            columnDefs: [
+                { className: 'control', orderable: false, targets: 0 },
+                { orderable: false, targets: -1 }
+            ],
+            language: { url: '/datatable/tr.json' },
+
+        initComplete: function () {
+            $('#loadingOverlay').fadeOut(200);
+        }
+        });
 
             // 🔹 Input değişince sadece draw çağır
             $('#myTable thead tr:eq(1) th input').on('keyup change clear', function () {
