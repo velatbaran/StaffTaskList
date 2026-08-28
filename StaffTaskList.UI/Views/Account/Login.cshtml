@@ -1,54 +1,191 @@
-﻿@model LoginViewModel
+﻿
+@model LoginViewModel
 
 @{
     Layout = "_LayoutLogin";
     ViewData["Title"] = "Giriş";
 }
 
-<style>
-    .auth .brand-logo img{
-        width: 500px;
-    }
-</style>
 
-<div class="row w-100 mx-0">
-    <div class="col-lg-4 mx-auto">
-        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-            <div class="brand-logo text-center">
-                <img src="~/images/makinaikmal.png" height="300" />
+<link href="~/css/login.css" rel="stylesheet" />
+<div class="login-page">
+
+    <div class="login-bg-shape one"></div>
+    <div class="login-bg-shape two"></div>
+
+    <div class="login-container">
+
+        <!-- =====================================================
+             SOL KURUMSAL ALAN
+             ===================================================== -->
+
+        <div class="login-brand-panel">
+
+            <div class="brand-content">
+
+                <div class="brand-logo-box">
+                    <img src="~/images/makinaikmal.png" alt="Makina İmalat ve Donatım Şube Müdürlüğü" />
+                </div>
+
+                <div class="brand-kicker">
+                    <i class="fa-solid fa-circle"></i>
+                    Personel Yönetim Sistemi
+                </div>
+
+                <h2 class="brand-title">
+                    Makina İmalat ve Donatım
+                    Şube Müdürlüğü
+                </h2>
+
+                <p class="brand-description">
+                    Personel görev ve görevlendirme süreçlerinizi
+                    tek bir platform üzerinden güvenli ve kolay
+                    bir şekilde yönetin.
+                </p>
+
             </div>
-            <div class="text-center">
-                <h2>Makina İmalat ve Donatım Şube Müdürlüğü</h2>
-                <h3>Personel Görev Yönetimi</h3>
-                <h4>Giriş Sayfasına Hoşgeldiniz</h4>
+
+            <div class="brand-footer">
+                <span class="brand-footer-line"></span>
+                <span>DSİ Personel Görev Yönetim Sistemi</span>
             </div>
-            <form class="pt-3" method="post" asp-action="Login" asp-controller="Account">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Username" class="control-label"></label>
-                    <input asp-for="Username" class="form-control" />
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password" class="control-label"></label>
-                    <input type="password" asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <input type="hidden" asp-for="ReturnUrl" value="@Context.Request.Query["ReturnUrl"]" />
-                <div class="mt-3">
-                    <button type="submit" value="Giriş Yap" class="btn btn-outline-success btn-rounded" title="Ekle"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
-                </div>
-                <div class="my-2 d-flex justify-content-between align-items-center">
-                    <div class="form-check">
-                        <label class="form-check-label text-muted">
-                            <input type="checkbox" class="form-check-input">
-                            Beni Hatırla
-                        </label>
-                    </div>
-                    @* <a href="/Account/ForgetPassword" class="auth-link text-black">Şifremi Unuttum</a> *@
-                    <a href="/sifremiunuttum" class="auth-link text-black">Şifremi Unuttum</a>
-                </div>
-            </form>
+
         </div>
+
+
+        <!-- =====================================================
+             LOGIN FORM
+             ===================================================== -->
+
+        <div class="login-form-panel">
+
+            <div class="login-form-container">
+
+                <div class="login-heading">
+
+                    <h1>Hoş Geldiniz</h1>
+
+                    <p>
+                        Sisteme devam etmek için kullanıcı
+                        bilgilerinizle giriş yapın.
+                    </p>
+
+                </div>
+
+
+                <form method="post"
+                      asp-action="Login"
+                      asp-controller="Account">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="login-validation">
+                    </div>
+
+
+                    <!-- Kullanıcı adı -->
+
+                    <div class="login-form-group">
+
+                        <label asp-for="Username"
+                               class="login-label">
+                            Kullanıcı Adı
+                        </label>
+
+                        <div class="login-input-wrapper">
+
+                            <i class="fa-solid fa-user login-input-icon"></i>
+
+                            <input asp-for="Username"
+                                   class="login-input"
+                                   placeholder="Kullanıcı adınızı girin"
+                                   autocomplete="username" />
+
+                        </div>
+
+                        <span asp-validation-for="Username"
+                              class="login-validation-message">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Şifre -->
+
+                    <div class="login-form-group">
+
+                        <label asp-for="Password"
+                               class="login-label">
+                            Şifre
+                        </label>
+
+                        <div class="login-input-wrapper">
+
+                            <i class="fa-solid fa-lock login-input-icon"></i>
+
+                            <input type="password"
+                                   asp-for="Password"
+                                   class="login-input"
+                                   placeholder="Şifrenizi girin"
+                                   autocomplete="current-password" />
+
+                        </div>
+
+                        <span asp-validation-for="Password"
+                              class="login-validation-message">
+                        </span>
+
+                    </div>
+
+
+                    <input type="hidden"
+                           asp-for="ReturnUrl"
+                           value="@Context.Request.Query["ReturnUrl"]" />
+
+
+                    <!-- Seçenekler -->
+
+                    <div class="login-options">
+
+                        <label class="login-remember">
+
+                            <input type="checkbox"
+                                   name="RememberMe"
+                                   value="true" />
+
+                            <span>Beni Hatırla</span>
+
+                        </label>
+
+
+                        <a href="/sifremiunuttum"
+                           class="login-forgot">
+
+                            Şifremi Unuttum
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- Giriş -->
+
+                    <button type="submit"
+                            class="login-submit">
+
+                        <i class="fa-solid fa-right-to-bracket"></i>
+
+                        <span>Giriş Yap</span>
+
+                    </button>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
     </div>
+
 </div>
+
