@@ -819,7 +819,381 @@ textarea.tg-form-control {
 
 
 /* =========================================================
-   RESPONSIVE
+   UZATILMAYAN GÖREVLER
+   DETAY BUTONU
+   ========================================================= */
+
+/*
+   Burada özellikle !important kullanıldı.
+   Çünkü buton daha önce pr-action-btn sınıfından
+   gelen başka CSS kurallarından etkileniyordu.
+*/
+
+.tg-detail-btn {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    background: #f1f5f9 !important;
+    background-image: none !important;
+    color: #475569 !important;
+    box-shadow: none !important;
+    font-size: 12px !important;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: var(--tg-transition);
+}
+
+
+    .tg-detail-btn i {
+        margin: 0 !important;
+        color: inherit !important;
+        font-size: 12px !important;
+    }
+
+
+    .tg-detail-btn:hover,
+    .tg-detail-btn:focus,
+    .tg-detail-btn:active {
+        background: #475569 !important;
+        background-image: none !important;
+        border-color: #475569 !important;
+        color: #ffffff !important;
+        box-shadow: 0 5px 12px rgba(71,85,105,.22) !important;
+        transform: translateY(-1px);
+    }
+
+
+    .tg-detail-btn:focus {
+        outline: none !important;
+    }
+
+
+/* =========================================================
+   GÖREV DETAY MODALI
+   ========================================================= */
+
+#taskDetailModal .modal-dialog {
+    max-width: 850px;
+}
+
+
+#taskDetailModal .modal-content.task-detail-modal {
+    border: 1px solid var(--tg-border) !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    box-shadow: 0 20px 60px rgba(15,23,42,.18) !important;
+}
+
+
+/* =========================================================
+   MODAL HEADER
+   ========================================================= */
+
+#taskDetailModal .task-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 18px 22px !important;
+    border-bottom: 1px solid var(--tg-border-light) !important;
+    background: #fff !important;
+}
+
+
+.task-detail-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.task-detail-icon {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: linear-gradient( 135deg, var(--tg-primary), #706ed0 );
+    color: #fff;
+    font-size: 16px;
+    box-shadow: 0 5px 12px rgba(75,73,172,.20);
+}
+
+
+.task-detail-title h5 {
+    margin: 0 0 3px 0;
+    color: var(--tg-text);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+.task-detail-title span {
+    display: block;
+    color: var(--tg-muted);
+    font-size: 11.5px;
+}
+
+
+/* =========================================================
+   MODAL KAPAT
+   ========================================================= */
+
+#taskDetailModal .btn-close {
+    width: 32px;
+    height: 32px;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    background-color: #f8fafc !important;
+    opacity: 1 !important;
+    transition: var(--tg-transition);
+}
+
+
+    #taskDetailModal .btn-close:hover {
+        background-color: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+        opacity: 1 !important;
+    }
+
+
+/* =========================================================
+   MODAL BODY
+   ========================================================= */
+
+#taskDetailModal .task-detail-body {
+    padding: 22px !important;
+    background: #fff !important;
+}
+
+
+/* =========================================================
+   PERSONEL ANA BİLGİSİ
+   ========================================================= */
+
+.task-detail-main {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    border: 1px solid #e8eaf0;
+    border-radius: 11px;
+    background: #f8f9fc;
+}
+
+
+.task-detail-avatar {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient( 135deg, var(--tg-primary), #706ed0 );
+    color: #fff;
+    font-size: 15px;
+    box-shadow: 0 4px 10px rgba(75,73,172,.18);
+}
+
+
+.task-detail-label {
+    margin-bottom: 3px;
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .06em;
+}
+
+
+.task-detail-employee {
+    color: #263246;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   DETAY BİLGİ GRID
+   ========================================================= */
+
+.task-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+
+.task-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+    padding: 12px 13px;
+    border: 1px solid #edf0f3;
+    border-radius: 10px;
+    background: #fff;
+    transition: var(--tg-transition);
+}
+
+
+    .task-detail-item:hover {
+        border-color: #dfe3e8;
+        background: #fafbfc;
+        transform: translateY(-1px);
+    }
+
+
+.task-detail-item-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--tg-primary-light);
+    color: var(--tg-primary);
+    font-size: 12px;
+}
+
+
+.task-detail-item > div:last-child {
+    min-width: 0;
+}
+
+
+.task-detail-item span {
+    display: block;
+    margin-bottom: 3px;
+    color: #94a3b8;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+
+.task-detail-item strong {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #334155;
+    font-size: 12.5px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   DURUM
+   ========================================================= */
+
+.task-status-pending {
+    color: #b45309 !important;
+}
+
+
+/* =========================================================
+   AÇIKLAMA
+   ========================================================= */
+
+.task-detail-description {
+    margin-top: 4px;
+    padding: 14px 15px;
+    border: 1px solid #edf0f3;
+    border-radius: 10px;
+    background: #f8fafc;
+}
+
+
+.task-detail-description-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 8px;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+    .task-detail-description-header i {
+        color: var(--tg-primary);
+        font-size: 11px;
+    }
+
+
+.task-detail-description-content {
+    min-height: 20px;
+    color: #64748b;
+    font-size: 12.5px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   MODAL FOOTER
+   ========================================================= */
+
+#taskDetailModal .task-detail-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 13px 22px !important;
+    border-top: 1px solid var(--tg-border-light) !important;
+    background: #fafbfc !important;
+}
+
+
+    #taskDetailModal .task-detail-footer .pr-btn {
+        min-height: 34px;
+        padding: 7px 13px;
+        border-radius: 8px;
+        font-size: 12px;
+    }
+
+
+    /*
+   pr-btn stilinden bağımsız olarak Kapat butonunu
+   burada da güvenceye alıyoruz.
+*/
+
+    #taskDetailModal .task-detail-footer .pr-btn-outline {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        background: #fff !important;
+        border: 1px solid #dfe3e8 !important;
+        color: #64748b !important;
+    }
+
+
+        #taskDetailModal .task-detail-footer .pr-btn-outline:hover {
+            background: #f8fafc !important;
+            border-color: #cbd1d8 !important;
+            color: #334155 !important;
+        }
+
+
+/* =========================================================
+   MODAL RESPONSIVE
    ========================================================= */
 
 @media (max-width: 992px) {
@@ -834,6 +1208,10 @@ textarea.tg-form-control {
 
     .tg-description {
         max-width: 180px;
+    }
+
+    #taskDetailModal .modal-dialog {
+        max-width: calc(100% - 30px);
     }
 }
 
@@ -864,6 +1242,10 @@ textarea.tg-form-control {
 
     .tg-form-card {
         padding: 18px;
+    }
+
+    #taskDetailModal .task-detail-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -903,5 +1285,55 @@ textarea.tg-form-control {
 
     .tg-form-actions {
         flex-wrap: wrap;
+    }
+
+    /* MODAL */
+
+    #taskDetailModal .modal-dialog {
+        max-width: calc(100% - 16px);
+        margin: 8px auto;
+    }
+
+    #taskDetailModal .task-detail-header {
+        padding: 14px 15px !important;
+    }
+
+    #taskDetailModal .task-detail-body {
+        padding: 15px !important;
+    }
+
+    #taskDetailModal .task-detail-footer {
+        padding: 11px 15px !important;
+    }
+
+    .task-detail-title h5 {
+        font-size: 14px;
+    }
+
+    .task-detail-title span {
+        font-size: 10.5px;
+    }
+
+    .task-detail-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .task-detail-main {
+        padding: 12px;
+        margin-bottom: 14px;
+    }
+
+    .task-detail-employee {
+        font-size: 13.5px;
+    }
+
+    .task-detail-item {
+        padding: 10px;
+    }
+
+    .task-detail-description {
+        padding: 12px;
     }
 }
