@@ -169,6 +169,11 @@ namespace StaffTaskList.Data
                     entry.Entity.Created = username;
                     entry.Entity.CreatedDate = DateTime.Now;
                 }
+                else if (entry.State == EntityState.Deleted)
+                {
+                    entry.Entity.Created = username;
+                    entry.Entity.CreatedDate = DateTime.Now;
+                }
             }
         }
     }

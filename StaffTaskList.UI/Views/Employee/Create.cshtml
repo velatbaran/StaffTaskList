@@ -3,25 +3,50 @@
     ViewData["Title"] = "Personel Ekle";
 }
 
-<div class="row">
-    <div class="col-md-8">
+<link href="~/css/personel.css" rel="stylesheet" />
+
+<div class="pr-page">
+
+    <div class="pr-header">
+        <div>
+            <h1 class="pr-title">
+                <span class="pr-title-icon"><i class="fa-solid fa-user-plus"></i></span>
+                Personel Ekle
+            </h1>
+            <div class="pr-subtitle">Yeni personel bilgilerini girin.</div>
+        </div>
+    </div>
+
+    <div class="pr-card pr-form-card">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NameSurname" class="control-label"></label>
-                <input asp-for="NameSurname" class="form-control" />
+            <div asp-validation-summary="ModelOnly" class="pr-validation-summary"></div>
+
+            <div class="pr-form-group">
+                <label asp-for="NameSurname" class="pr-label"></label>
+                <input asp-for="NameSurname" class="pr-input" placeholder="Örn. Ahmet Yılmaz" autocomplete="off" />
                 <span asp-validation-for="NameSurname" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Position" class="control-label"></label>
-                <input asp-for="Position" class="form-control" />
+
+            <div class="pr-form-group">
+                <label asp-for="Position" class="pr-label"></label>
+                <input asp-for="Position" class="pr-input" placeholder="Örn. Yazılım Geliştirici" autocomplete="off" />
                 <span asp-validation-for="Position" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <button type="submit" value="Ekle" class="btn btn-outline-success btn-rounded" title="Ekle"><i class="fa-solid fa-floppy-disk"></i> Ekle</button>&nbsp;&nbsp;&nbsp;
-                @* <a href="/Users/Index" class="btn btn-outline-secondary btn-rounded" title="İptal"><i class="fa-solid fa-ban"></i> İptal</a> *@
-                <a href="/personeller" class="btn btn-outline-secondary btn-rounded" title="İptal"><i class="fa-solid fa-ban"></i> İptal</a>
+
+            <div class="pr-form-actions">
+                <button type="submit" value="Ekle" class="pr-btn pr-btn-success" title="Ekle">
+                    <i class="fa-solid fa-floppy-disk"></i> Ekle
+                </button>
+                <a href="/personeller" class="pr-btn pr-btn-outline" title="İptal">
+                    <i class="fa-solid fa-ban"></i> İptal
+                </a>
             </div>
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

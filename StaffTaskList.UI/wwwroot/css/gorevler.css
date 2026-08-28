@@ -1,0 +1,959 @@
+﻿/* ==========================================================================
+   Görev Yönetimi Modülü Ortak Stil Dosyası (gorev.css)
+   ========================================================================== */
+
+/*@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');*/
+
+:root {
+    --pr-primary: #4f46e5;
+    --pr-primary-hover: #4338ca;
+    --pr-primary-light: #eef2ff;
+    --pr-success: #10b981;
+    --pr-success-light: #ecfdf5;
+    --pr-success-text: #047857;
+    --pr-warning: #f59e0b;
+    --pr-warning-light: #fffbe6;
+    --pr-warning-text: #b45309;
+    --pr-danger: #ef4444;
+    --pr-danger-hover: #dc2626;
+    --pr-danger-light: #fef2f2;
+    --pr-bg: #f8fafc;
+    --pr-card-bg: #ffffff;
+    --pr-border: #e2e8f0;
+    --pr-text-main: #0f172a;
+    --pr-text-muted: #64748b;
+    --pr-radius: 12px;
+    --pr-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--pr-text-main);
+}
+
+.pr-page {
+    padding: 2rem;
+    background-color: var(--pr-bg);
+    min-height: 100vh;
+}
+
+/* Page Header & Actions */
+.pr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.pr-title {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--pr-text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.pr-title-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--pr-primary-light);
+    color: var(--pr-primary);
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.pr-subtitle {
+    font-size: 0.9rem;
+    color: var(--pr-text-muted);
+    margin-top: 0.35rem;
+}
+
+/* Modern Button Base */
+.pr-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none !important;
+    cursor: pointer;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+    .pr-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .pr-btn:active {
+        transform: translateY(0);
+    }
+
+.pr-btn-primary {
+    background: var(--pr-primary);
+    color: #fff !important;
+}
+
+    .pr-btn-primary:hover {
+        background: var(--pr-primary-hover);
+    }
+
+.pr-btn-success {
+    background: var(--pr-success);
+    color: #fff !important;
+}
+
+    .pr-btn-success:hover {
+        background: #059669;
+    }
+
+.pr-btn-warning {
+    background: var(--pr-warning);
+    color: #fff !important;
+}
+
+    .pr-btn-warning:hover {
+        background: #d97706;
+    }
+
+.pr-btn-danger {
+    background: var(--pr-danger);
+    color: #fff !important;
+}
+
+    .pr-btn-danger:hover {
+        background: var(--pr-danger-hover);
+    }
+
+.pr-btn-outline {
+    background: #ffffff;
+    border-color: var(--pr-border);
+    color: var(--pr-text-main) !important;
+}
+
+    .pr-btn-outline:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1;
+    }
+
+/* Icon-Only Action Buttons for Table */
+.pr-action-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: #ffffff;
+    font-size: 0.875rem;
+}
+
+.pr-action-btn-edit {
+    color: var(--pr-warning-text);
+    background: var(--pr-warning-light);
+    border-color: #fde68a;
+}
+
+    .pr-action-btn-edit:hover {
+        background: var(--pr-warning);
+        color: #ffffff;
+    }
+
+.pr-action-btn-extend {
+    color: var(--pr-primary);
+    background: var(--pr-primary-light);
+    border-color: #c7d2fe;
+}
+
+    .pr-action-btn-extend:hover {
+        background: var(--pr-primary);
+        color: #ffffff;
+    }
+
+.pr-action-btn-delete {
+    color: var(--pr-danger);
+    background: var(--pr-danger-light);
+    border-color: #fecaca;
+}
+
+    .pr-action-btn-delete:hover {
+        background: var(--pr-danger);
+        color: #ffffff;
+    }
+
+.pr-action-btn-view {
+    color: #374151;
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+    .pr-action-btn-view:hover {
+        background: #374151;
+        color: #ffffff;
+        border-color: #374151;
+    }
+
+.pr-action-btn-history {
+    color: #9f1239;
+    background: #fff1f2;
+    border-color: #fecdd3;
+}
+
+    .pr-action-btn-history:hover {
+        background: #9f1239;
+        color: #ffffff;
+        border-color: #9f1239;
+    }
+
+.pr-action-btn.disabled,
+.pr-action-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed !important;
+    background: #f1f5f9 !important;
+    color: #94a3b8 !important;
+    border-color: #e2e8f0 !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Cards & Form Control Styling */
+.pr-card {
+    background: var(--pr-card-bg);
+    border: 1px solid var(--pr-border);
+    border-radius: var(--pr-radius);
+    box-shadow: var(--pr-shadow);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.pr-form-group {
+    margin-bottom: 1.25rem;
+}
+
+    .pr-form-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--pr-text-main);
+        margin-bottom: 0.4rem;
+    }
+
+.pr-form-control {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.875rem;
+    border: 1px solid var(--pr-border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--pr-text-main);
+    transition: all 0.2s ease;
+}
+
+    .pr-form-control:focus {
+        outline: none;
+        border-color: var(--pr-primary);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+    }
+
+    .pr-form-control[readonly] {
+        background-color: #f8fafc;
+        color: var(--pr-text-muted);
+        cursor: not-allowed;
+    }
+
+/* Table Container & Datatable Overrides */
+.pr-table-card {
+    background: var(--pr-card-bg);
+    border: 1px solid var(--pr-border);
+    border-radius: var(--pr-radius);
+    box-shadow: var(--pr-shadow);
+    overflow: hidden;
+    position: relative;
+}
+
+/* DataTables Top Bar (Buttons Styling) */
+.dt-buttons {
+    padding: 1.25rem 1.5rem 0.5rem 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.dt-button {
+    background: #ffffff !important;
+    border: 1px solid var(--pr-border) !important;
+    color: var(--pr-text-muted) !important;
+    border-radius: 6px !important;
+    padding: 0.4rem 0.85rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03) !important;
+}
+
+    .dt-button:hover {
+        background: #f8fafc !important;
+        color: var(--pr-text-main) !important;
+        border-color: #cbd5e1 !important;
+    }
+
+.pr-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 0 !important;
+}
+
+    .pr-table th {
+        background: #f8fafc;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--pr-text-muted);
+        font-weight: 700;
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--pr-border);
+        border-top: 1px solid var(--pr-border);
+    }
+
+    .pr-table td {
+        padding: 1rem 1.25rem;
+        vertical-align: middle;
+        font-size: 0.875rem;
+        color: #334155;
+        border-bottom: 1px solid var(--pr-border);
+    }
+
+    .pr-table tbody tr {
+        transition: background-color 0.15s ease;
+    }
+
+        .pr-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+    /* Inline Filter Inputs */
+    .pr-table thead tr:nth-child(2) th {
+        background: #ffffff;
+        padding: 0.5rem 0.75rem 1rem 0.75rem;
+    }
+
+.pr-table-filter {
+    width: 100%;
+    padding: 0.4rem 0.65rem;
+    font-size: 0.8rem;
+    border: 1px solid var(--pr-border);
+    border-radius: 6px;
+    background: #f8fafc;
+    transition: all 0.2s ease;
+}
+
+    .pr-table-filter:focus {
+        background: #ffffff;
+        outline: none;
+        border-color: var(--pr-primary);
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+    }
+
+/* Pill Badges */
+.pr-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.775rem;
+    font-weight: 600;
+}
+
+.pr-badge-success {
+    background-color: var(--pr-success-light);
+    color: var(--pr-success-text);
+}
+
+.pr-badge-warning {
+    background-color: var(--pr-warning-light);
+    color: var(--pr-warning-text);
+}
+
+.pr-badge-neutral {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+/* Grid Actions Wrapper */
+.pr-actions-cell {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+/* Select2 Enhancements */
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single {
+    height: 42px !important;
+    border: 1px solid var(--pr-border) !important;
+    border-radius: 8px !important;
+    padding: 6px 10px !important;
+}
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 28px !important;
+        color: var(--pr-text-main) !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 40px !important;
+    }
+
+/* Modern Skeleton Overlay */
+#loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    z-index: 20;
+    padding: 2rem;
+    transition: opacity 0.3s ease;
+}
+
+    #loadingOverlay.pr-hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+.pr-skeleton-toolbar {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.pr-skeleton-chip {
+    height: 36px;
+    width: 90px;
+    background: #e2e8f0;
+    border-radius: 6px;
+    animation: prPulse 1.5s infinite;
+}
+
+.pr-skeleton-row {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.pr-skeleton-block {
+    height: 22px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    animation: prPulse 1.5s infinite;
+}
+
+.pr-skeleton-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+@keyframes prPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* ==========================================================================
+   Dashboard KPI Metric Cards
+   ========================================================================== */
+
+.pr-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+}
+
+.pr-stat-card {
+    background: var(--pr-card-bg);
+    border: 1px solid var(--pr-border);
+    border-radius: var(--pr-radius);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--pr-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .pr-stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px -4px rgba(0, 0, 0, 0.08);
+    }
+
+.pr-stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.pr-stat-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--pr-text-muted);
+    margin-bottom: 0.35rem;
+}
+
+.pr-stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--pr-text-main);
+    line-height: 1;
+}
+
+.pr-stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+}
+
+/* Dynamic Card Colors */
+.pr-stat-card.stat-total .pr-stat-icon {
+    background-color: var(--pr-primary-light);
+    color: var(--pr-primary);
+}
+
+.pr-stat-card.stat-pending .pr-stat-icon {
+    background-color: var(--pr-warning-light);
+    color: var(--pr-warning-text);
+}
+
+.pr-stat-card.stat-completed .pr-stat-icon {
+    background-color: var(--pr-success-light);
+    color: var(--pr-success-text);
+}
+
+.pr-stat-card.stat-today .pr-stat-icon {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+
+/* ==========================================================================
+   Modern DataTables Pagination & Footer Info Styling
+   ========================================================================== */
+
+/* Alt Bilgi Barı Alanı Layout */
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    padding: 1.25rem 1.5rem !important;
+    margin: 0 !important;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+}
+
+/* Sol Alt: Toplam / Gösterilen Kayıt Metni */
+.dataTables_wrapper .dataTables_info {
+    color: var(--pr-text-muted) !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+}
+
+/* Sağ Alt: Sayfalama Düğmeleri Konteynırı */
+.dataTables_wrapper .dataTables_paginate {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+}
+
+    /* Sayfa Butonları Temel Yapı */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 36px !important;
+        height: 36px !important;
+        padding: 0 0.5rem !important;
+        margin: 0 !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        color: var(--pr-text-main) !important;
+        background: #ffffff !important;
+        border: 1px solid var(--pr-border) !important;
+        border-radius: 8px !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        cursor: pointer !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+    }
+
+        /* Hover Etkisi (Aktif olmayan butonlar için) */
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover:not(.current):not(.disabled) {
+            background-color: var(--pr-primary-light) !important;
+            color: var(--pr-primary) !important;
+            border-color: #c7d2fe !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Aktif Sayfa Düğmesi */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+            background: var(--pr-primary) !important;
+            color: #ffffff !important;
+            border-color: var(--pr-primary) !important;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25) !important;
+        }
+
+        /* Devre Dışı (Disabled) Önceki / Sonraki Butonları */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+            background: #f8fafc !important;
+            color: #cbd5e1 !important;
+            border-color: var(--pr-border) !important;
+            cursor: not-allowed !important;
+            opacity: 0.7 !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+        /* Önceki ve Sonraki Butonları Özel İkon Desteği */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.next {
+            padding: 0 0.85rem !important;
+            font-weight: 500 !important;
+        }
+
+/* ==========================================================================
+   Table Row Soft Hover State (#4B49AC Soft Theme)
+   ========================================================================== */
+
+/* Normal satırların hover durumunda hafif yumuşatılmış #4B49AC rengi ve sol çizgi vurgusu */
+.pr-table tbody tr {
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+    .pr-table tbody tr:hover {
+        background-color: rgba(75, 73, 172, 0.08) !important; /* Soft #4B49AC */
+    }
+
+    /* DataTables Responsive açılır detay satırı (child row) için hover koruması */
+    .pr-table tbody tr.child:hover {
+        background-color: transparent !important;
+    }
+
+    .pr-table tbody tr:hover td:first-child {
+        border-left: 3px solid #4B49AC !important;
+    }
+
+
+
+/* ========================================================================== */
+/* GÖREV DETAY MODAL */
+/* ========================================================================== */
+
+.task-detail-modal {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+}
+
+.task-detail-header {
+    padding: 1.25rem 1.5rem;
+    background: #ffffff;
+    border-bottom: 1px solid var(--pr-border);
+}
+
+.task-detail-title {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.task-detail-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--pr-primary-light);
+    color: var(--pr-primary);
+    font-size: 1.15rem;
+}
+
+.task-detail-title h5 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--pr-text-main);
+}
+
+.task-detail-title span {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.78rem;
+    color: var(--pr-text-muted);
+}
+
+.task-detail-body {
+    padding: 1.5rem;
+    background: #f8fafc;
+}
+
+/* Personel ana alanı */
+
+.task-detail-main {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    margin-bottom: 1.25rem;
+    background: #ffffff;
+    border: 1px solid var(--pr-border);
+    border-radius: 12px;
+}
+
+.task-detail-avatar {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--pr-primary-light);
+    color: var(--pr-primary);
+    font-size: 1.2rem;
+}
+
+.task-detail-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--pr-text-muted);
+    margin-bottom: 3px;
+}
+
+.task-detail-employee {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--pr-text-main);
+}
+
+/* Bilgi grid */
+
+.task-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.task-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-height: 70px;
+    padding: 0.85rem 1rem;
+    background: #ffffff;
+    border: 1px solid var(--pr-border);
+    border-radius: 10px;
+}
+
+.task-detail-item-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: var(--pr-primary-light);
+    color: var(--pr-primary);
+    font-size: 0.9rem;
+}
+
+.task-detail-item span {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--pr-text-muted);
+    margin-bottom: 3px;
+}
+
+.task-detail-item strong {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--pr-text-main);
+    word-break: break-word;
+}
+
+/* Durum */
+
+.task-status-completed {
+    color: var(--pr-success-text) !important;
+}
+
+.task-status-pending {
+    color: var(--pr-warning-text) !important;
+}
+
+/* Açıklama */
+
+.task-detail-description {
+    margin-top: 0.75rem;
+    background: #ffffff;
+    border: 1px solid var(--pr-border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.task-detail-description-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--pr-border);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--pr-text-main);
+}
+
+    .task-detail-description-header i {
+        color: var(--pr-primary);
+    }
+
+.task-detail-description-content {
+    min-height: 70px;
+    padding: 1rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #475569;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Footer */
+
+.task-detail-footer {
+    padding: 1rem 1.5rem;
+    background: #ffffff;
+    border-top: 1px solid var(--pr-border);
+}
+
+
+/* ========================================================================== */
+/* DETAY BUTONU */
+/* ========================================================================== */
+
+.pr-action-btn-view {
+    cursor: pointer;
+}
+
+    .pr-action-btn-view:focus {
+        outline: none;
+    }
+
+
+/* ========================================================================== */
+/* RESPONSIVE */
+/* ========================================================================== */
+
+@media (max-width: 767px) {
+
+    .task-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .task-detail-body {
+        padding: 1rem;
+    }
+
+    .task-detail-header {
+        padding: 1rem;
+    }
+
+    .task-detail-footer {
+        padding: 0.85rem 1rem;
+    }
+}
+
+/* ========================================================================== */
+/* GÖREV DETAY MODALI - KÜÇÜK BOYUT */
+/* ========================================================================== */
+
+.task-detail-dialog {
+    max-width: 650px !important;
+    width: calc(100% - 2rem);
+}
+
+.task-detail-modal {
+    border-radius: 14px;
+}
+
+/* Modal iç boşluklarını da hafif küçült */
+.task-detail-header {
+    padding: 1rem 1.25rem;
+}
+
+.task-detail-body {
+    padding: 1.15rem;
+}
+
+.task-detail-footer {
+    padding: 0.8rem 1.25rem;
+}
+
+/* Personel alanı */
+.task-detail-main {
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Bilgi kutuları */
+.task-detail-grid {
+    gap: 0.6rem;
+}
+
+.task-detail-item {
+    min-height: 60px;
+    padding: 0.7rem 0.85rem;
+}
+
+/* Açıklama alanı */
+.task-detail-description {
+    margin-top: 0.6rem;
+}
+
+.task-detail-description-content {
+    min-height: 55px;
+    padding: 0.8rem;
+}

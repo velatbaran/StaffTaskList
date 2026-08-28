@@ -41,6 +41,7 @@ namespace StaffTaskList.UI.Models
         public bool IsActive { get; set; }
 
         [DisplayName("Kayıt Tarihi")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = false)]
         public DateTime? CreatedDate { get; set; }
 
         public int ExtensionCount { get; set; }

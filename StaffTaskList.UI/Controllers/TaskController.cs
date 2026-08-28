@@ -318,7 +318,7 @@ namespace StaffTaskList.UI.Controllers
                     taskdeparture.IsActive = false;
                     //     taskdeparture.IsActive = true;
                     _repoTaskDeparture.Update(taskdeparture);
-                    await _repoTaskDeparture.SaveChangesAsync();
+                     _repoTaskDeparture.SaveChanges();
 
                     var extendTaskDepoarture = new TaskDeparture()
                     {

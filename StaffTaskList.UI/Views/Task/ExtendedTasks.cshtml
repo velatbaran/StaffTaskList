@@ -7,125 +7,221 @@
 <link href="~/datatable/buttons.datatables.css" rel="stylesheet" />
 <link href="~/datatable/responsive.datatables.min.css" rel="stylesheet" />
 <link href="~/datatable/datatables.min.css" rel="stylesheet" />
+<link href="~/css/gorev.css" rel="stylesheet" />
 
-<style>
-    .table {
-        font-family: "Segoe UI", Arial, sans-serif;
-        font-size: 14px;
-        color: #333;
-        border-collapse: separate;
-        border-spacing: 0;
-    }
+<div class="tg-page">
 
-        .table th {
-            background: #f0f2f5;
-            font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
-            padding: 10px;
-            border-bottom: 2px solid #dcdfe3;
-        }
+    <div class="tg-header">
 
-        .table td {
-            font-size: 12px;
-            padding: 8px 10px;
-            vertical-align: middle;
-        }
+        <div>
 
-        /* Modern input stil */
-        .table input[type="text"] {
-            width: 95%;
-            padding: 6px 10px;
-            border: 1px solid #c4c7cc;
-            border-radius: 6px;
-            font-size: 12px;
-            background: #fff;
-            transition: all .25s ease;
-        }
+            <h1 class="tg-title">
 
-            /* Hover input */
-            .table input[type="text"]:hover {
-                border-color: #9ba0a8;
-                background: #fafafa;
-            }
+                <span class="tg-title-icon">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </span>
 
-            /* Focus efekti */
-            .table input[type="text"]:focus {
-                outline: none;
-                border-color: #4a90e2;
-                box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
-                background: #fff;
-            }
+                Uzatılan Görevler
 
-        /* Satır hover */
-        .table tbody tr:hover {
-            background-color: #f7faff;
-        }
+            </h1>
 
-    /* Butonlara küçük estetik dokunuş */
-    .btn-rounded {
-        border-radius: 6px !important;
-    }
+            <div class="tg-subtitle">
+                Süresi uzatılan görev kayıtlarını ve geçmiş işlemlerini görüntüleyin.
+            </div>
 
-    /* Tablonun üst kenarına hafif gölge */
-    #myTable {
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        border-radius: 8px;
-        overflow: hidden;
-    }
-</style>
+        </div>
 
-<table class="table table-bordered table-striped" id="myTable">
-    <thead>
-        <tr>
-            <th></th> <!-- control kolonu -->
-            <th>@Html.DisplayNameFor(m => m.Employee)</th>
-            <th>@Html.DisplayNameFor(m => m.PlaceGone)</th>
-            <th>@Html.DisplayNameFor(m => m.ArrivalDate)</th>
-            <th>@Html.DisplayNameFor(m => m.ActiveDepartureDate)</th>
-            <th>@Html.DisplayNameFor(m => m.TotalDay)</th>
-            <th>@Html.DisplayNameFor(m => m.ActiveDescription)</th>
-            <th>@Html.DisplayNameFor(m => m.CreatedDate)</th>
-            <th>Aksiyon</th>
-        </tr>
-        <tr>
-            <th></th> <!-- control kolonu -->
-            <th><input type="text" placeholder="Ara Personel" /></th>
-            <th><input type="text" placeholder="Ara Gidilen Yer" /></th>
-            <th><input type="text" placeholder="Ara Varış Tarihi" /></th>
-            <th><input type="text" placeholder="Ara Ayrılış Tarihi" /></th>
-            <th><input type="text" placeholder="Ara Toplam Gün" /></th>
-            <th><input type="text" placeholder="Ara Açıklama" /></th>
-            <th><input type="text" placeholder="Ara Kayıt Tarihi" /></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td></td> <!-- control kolonu -->
-                <td>@Html.DisplayFor(m => item.Employee)</td>
-                <td>@Html.DisplayFor(m => item.PlaceGone)</td>
-                <td>@Html.DisplayFor(m => item.ArrivalDate)</td>
-                <td>@Html.DisplayFor(m => item.ActiveDepartureDate)</td>
-                <td class="text-left">@Html.DisplayFor(m => item.TotalDay)</td>
-                <td>@Html.DisplayFor(m => item.ActiveDescription)</td>
-                <td>@Html.DisplayFor(m => item.CreatedDate)</td>
-                <td>
-                    <a class="btn btn-warning btn-sm btn-rounded"
-                       asp-action="ExtendedTasksOne"
-                       asp-route-id="@item.Id" title="Geçmiş">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        Geçmiş (@item.ExtensionCount)
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    </div>
+
+
+    <div class="tg-table-wrap">
+
+        <table class="table tg-table" id="myTable">
+
+            <thead>
+
+                <tr>
+
+                    <th></th>
+
+                    <th>@Html.DisplayNameFor(m => m.Employee)</th>
+
+                    <th>@Html.DisplayNameFor(m => m.PlaceGone)</th>
+
+                    <th>@Html.DisplayNameFor(m => m.ArrivalDate)</th>
+
+                    <th>@Html.DisplayNameFor(m => m.ActiveDepartureDate)</th>
+
+                    <th>@Html.DisplayNameFor(m => m.TotalDay)</th>
+
+                    <th>@Html.DisplayNameFor(m => m.ActiveDescription)</th>
+
+                    <th>@Html.DisplayNameFor(m => m.CreatedDate)</th>
+
+                    <th>Aksiyon</th>
+
+                </tr>
+
+
+                <tr class="tg-filter-row">
+
+                    <th></th>
+
+                    <th>
+                        <input type="text" placeholder="Ara Personel" />
+                    </th>
+
+                    <th>
+                        <input type="text" placeholder="Ara Gidilen Yer" />
+                    </th>
+
+                    <th>
+                        <input type="text" placeholder="Ara Varış Tarihi" />
+                    </th>
+
+                    <th>
+                        <input type="text" placeholder="Ara Ayrılış Tarihi" />
+                    </th>
+
+                    <th>
+                        <input type="text" placeholder="Ara Toplam Gün" />
+                    </th>
+
+                    <th>
+                        <input type="text" placeholder="Ara Açıklama" />
+                    </th>
+
+                    <th>
+                        <input type="text" placeholder="Ara Kayıt Tarihi" />
+                    </th>
+
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td></td>
+
+
+                        <td>
+
+                            <div class="tg-person-cell">
+
+                                <span class="tg-avatar">
+                                    @(string.IsNullOrWhiteSpace(item.Employee)
+                                        ? "?"
+                                        : item.Employee.Trim().Substring(0, 1).ToUpper())
+                                </span>
+
+                                <span class="tg-person-name">
+                                    @item.Employee
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="tg-location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                @item.PlaceGone
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="tg-date">
+                                @item.ArrivalDate
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="tg-date tg-date-success">
+                                @item.ActiveDepartureDate
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="tg-day-badge tg-day-success">
+                                @item.TotalDay gün
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="tg-description">
+                                @item.ActiveDescription
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="tg-created-date">
+                                @item.CreatedDate
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="tg-actions-cell">
+
+                                <a class="tg-btn tg-btn-history"
+                                   asp-action="ExtendedTasksOne"
+                                   asp-route-id="@item.Id"
+                                   title="Geçmiş">
+
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                                    Geçmiş
+
+                                    <span class="tg-count">
+                                        @item.ExtensionCount
+                                    </span>
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
 
 @section Scripts {
+
     <script src="~/datatable/datatables.min.js"></script>
     <script src="~/datatable/datatables.responsive.min.js"></script>
     <script src="~/datatable/datatables.buttons.min.js"></script>
@@ -135,79 +231,110 @@
     <script src="~/datatable/pdfmake.min.js"></script>
     <script src="~/datatable/vfs_fonts.js"></script>
 
+
     <script>
 
-                         function normalizeTr(text) {
-             if (!text) return "";
+        function normalizeTr(text) {
 
-             return text.toString()
-                 .toLowerCase()
-                 .replace(/ı/g, "i")
-                 .replace(/İ/g, "i")
-                 .replace(/i̇/g, "i")
-                 .replace(/ğ/g, "g")
-                 .replace(/ü/g, "u")
-                 .replace(/ş/g, "s")
-                 .replace(/ö/g, "o")
-                 .replace(/ç/g, "c");
-         }
+            if (!text)
+                return "";
+
+            return text.toString()
+                .toLowerCase()
+                .replace(/ı/g, "i")
+                .replace(/İ/g, "i")
+                .replace(/i̇/g, "i")
+                .replace(/ğ/g, "g")
+                .replace(/ü/g, "u")
+                .replace(/ş/g, "s")
+                .replace(/ö/g, "o")
+                .replace(/ç/g, "c");
+
+        }
+
 
         $(document).ready(function () {
-                                            // 🔹 Türkçe uyumlu custom search
-                    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 
-                        var employeeInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(1) input').val());
-                        var placeGoneInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(2) input').val());
-                        var arrivalDateInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(3) input').val());
-                        var activeDepartureDateInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(4) input').val());
-                        var totalDayInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(5) input').val());
-                        var descriptionInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(6) input').val());
-                        var createdDate = normalizeTr($('#myTable thead tr:eq(1) th:eq(7) input').val());
+            $.fn.dataTable.ext.search.push(function (settings, data) {
 
-                        var rowEmployee = normalizeTr(data[1]);   // Personel
-                        var rowPlaceGone = normalizeTr(data[2]);  // Gidilen Yer
-                        var rowArrivalDate = normalizeTr(data[3]);  // Varış Tarihi
-                        var rowActiveDepartureDate = normalizeTr(data[4]);  // Aktif Ayrılış Tarihi
-                        var rowTotalDay = normalizeTr(data[5]);  // Toplam Gün
-                        var rowDescription = normalizeTr(data[6]); // Açıklama
-                        var rowCreatedDate = normalizeTr(data[7]); // Tamamlandı  Mı?
+                var inputs = [];
 
-                        if (employeeInput && !rowEmployee.includes(employeeInput)) return false;
-                        if (placeGoneInput && !rowPlaceGone.includes(placeGoneInput)) return false;
-                        if (arrivalDateInput && !rowArrivalDate.includes(arrivalDateInput)) return false;
-                        if (activeDepartureDateInput && !rowActiveDepartureDate.includes(activeDepartureDateInput)) return false;
-                        if (totalDayInput && !rowTotalDay.includes(totalDayInput)) return false;
-                        if (descriptionInput && !rowDescription.includes(descriptionInput)) return false;
-                        if (createdDate && !rowCreatedDate.includes(createdDate)) return false;
+                $('#myTable thead tr:eq(1) th input').each(function () {
+                    inputs.push(normalizeTr($(this).val()));
+                });
 
-                        return true;
-                    });
 
-        var table = $('#myTable').DataTable({
-            dom: 'Brtip',
-            buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
-            ordering: false,
-        paging: true,    // 🔥 OLMALI
-        pageLength: 10,
-        info: true,
-            responsive: {
-                details: { type: 'column', target: 0 }
-            },
-            columnDefs: [
-                { className: 'control', orderable: false, targets: 0 },
-                { orderable: false, targets: -1 }
-            ],
-            language: { url: '/datatable/tr.json' },
+                for (var i = 1; i <= 7; i++) {
 
-        initComplete: function () {
-            $('#loadingOverlay').fadeOut(200);
-        }
+                    if (
+                        inputs[i] &&
+                        !normalizeTr(data[i]).includes(inputs[i])
+                    ) {
+                        return false;
+                    }
+
+                }
+
+                return true;
+
+            });
+
+
+            var table = $('#myTable').DataTable({
+
+                dom: 'Brtip',
+
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    'pdf',
+                    'print'
+                ],
+
+                ordering: false,
+
+                paging: true,
+
+                pageLength: 10,
+
+                info: true,
+
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 0
+                    }
+                },
+
+                columnDefs: [
+                    {
+                        className: 'control',
+                        orderable: false,
+                        targets: 0
+                    },
+
+                    {
+                        orderable: false,
+                        targets: -1
+                    }
+                ],
+
+                language: {
+                    url: '/datatable/tr.json'
+                }
+
+            });
+
+
+            $('#myTable thead tr:eq(1) th input')
+                .on('keyup change clear', function () {
+
+                    table.draw();
+
+                });
+
         });
 
-                    // 🔹 Input değişince sadece draw çağır
-                    $('#myTable thead tr:eq(1) th input').on('keyup change clear', function () {
-                        table.draw();
-                    });
-        });
     </script>
 }

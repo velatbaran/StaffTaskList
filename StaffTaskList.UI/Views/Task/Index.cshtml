@@ -2,215 +2,815 @@
 
 @{
     ViewData["Title"] = "Görev Listesi";
-
     List<int?> extendedTaskId = ViewBag.ExtendedTaskIds as List<int?>;
 }
 
 <link href="~/datatable/buttons.datatables.css" rel="stylesheet" />
 <link href="~/datatable/responsive.datatables.min.css" rel="stylesheet" />
 <link href="~/datatable/datatables.min.css" rel="stylesheet" />
+<link href="~/css/gorevler.css" rel="stylesheet" />
 
-<p>
-    <a asp-action="Create" class="btn btn-primary" title="Yeni Ekle">
-        <i class="fa-solid fa-plus mr-2"></i>Yeni Ekle
-    </a>
-</p>
+<div class="pr-page">
 
-<style>
-    .table {
-        font-family: "Segoe UI", Arial, sans-serif;
-        font-size: 14px;
-        color: #333;
-        border-collapse: separate;
-        border-spacing: 0;
-    }
+    <!-- Page Header -->
+    <div class="pr-header">
+        <div>
+            <h1 class="pr-title">
+                <span class="pr-title-icon">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </span>
+                Görev Yönetim Paneli
+            </h1>
 
-        .table th {
-            background: #f0f2f5;
-            font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
-            padding: 10px;
-            border-bottom: 2px solid #dcdfe3;
-        }
-
-        .table td {
-            font-size: 12px;
-            padding: 8px 10px;
-            vertical-align: middle;
-        }
-
-        /* Modern input stil */
-        .table input[type="text"] {
-            width: 95%;
-            padding: 6px 10px;
-            border: 1px solid #c4c7cc;
-            border-radius: 6px;
-            font-size: 12px;
-            background: #fff;
-            transition: all .25s ease;
-        }
-
-            /* Hover input */
-            .table input[type="text"]:hover {
-                border-color: #9ba0a8;
-                background: #fafafa;
-            }
-
-            /* Focus efekti */
-            .table input[type="text"]:focus {
-                outline: none;
-                border-color: #4a90e2;
-                box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
-                background: #fff;
-            }
-
-        /* Satır hover */
-        .table tbody tr:hover {
-            background-color: #f7faff;
-        }
-
-    /* Butonlara küçük estetik dokunuş */
-    .btn-rounded {
-        border-radius: 6px !important;
-    }
-
-    /* Tablonun üst kenarına hafif gölge */
-    #myTable {
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        border-radius: 8px;
-        overflow: hidden;
-    }
-</style>
-
-<table class="table table-bordered table-striped" id="myTable">
-    <thead>
-        <tr>
-            <th></th>
-            <th style="font-size:12px">@Html.DisplayNameFor(m => m.Employee)</th>
-            <th style="font-size:12px">@Html.DisplayNameFor(m => m.PlaceGone)</th>
-            <th style="font-size:12px" style=" width:1%">@Html.DisplayNameFor(m => m.ArrivalDate)</th>
-            <th style="font-size:12px" style=" width:1%">@Html.DisplayNameFor(m => m.ActiveDepartureDate)</th>
-            <th class="text-left" style="font-size:12px; width:1%">@Html.DisplayNameFor(m => m.TotalDay)</th>
-            <th style="font-size:12px">@Html.DisplayNameFor(m => m.ActiveDescription)</th>
-            <th style="font-size:12px">Tamamlandı Mı?</th>
-            <th style="font-size:12px" style=" width:1%">@Html.DisplayNameFor(m => m.CreatedDate)</th>
-            <th style="font-size:12px">İşlemler</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th><input type="text" placeholder="Ara Personel" /></th>
-            <th><input type="text" placeholder="Ara Gidilen Yer" /></th>
-            <th><input type="text" placeholder="Ara Varış Tarihi" /></th>
-            <th><input type="text" placeholder="Ara Ayrılış Tarihi" /></th>
-            <th><input type="text" placeholder="Ara Toplam Gün" /></th>
-            <th><input type="text" placeholder="Ara Açıklama" /></th>
-            <th><input type="text" placeholder="Ara Tamamlandı Mı?" /></th>
-            <th><input type="text" placeholder="Ara Kayıt Tarihi" /></th>
-            <th></th> <!-- İşlemler sütunu filtre yok -->
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td style=" width:1%"></td>
-                <td>@Html.DisplayFor(m => item.Employee)</td>
-                <td>@Html.DisplayFor(m => item.PlaceGone)</td>
-                <td style=" width:1%">@Html.DisplayFor(m => item.ArrivalDate)</td>
-                <td style=" width:1%">@Html.DisplayFor(m => item.ActiveDepartureDate)</td>
-                <td class="text-left" style=" width:1%">@Html.DisplayFor(m => item.TotalDay)</td>
-                <td>@Html.DisplayFor(m => item.ActiveDescription)</td>
-                <td>
-                    @if (item.ActiveDepartureDate < DateTime.Now.Date)
-                    {
-                        <span><i class="fa-solid fa-check"></i> Tamamlandı</span>
-                    }
-                    else
-                    {
-                        <span><i class="fa-solid fa-hourglass-half"></i> Bekliyor</span>
-                    }
-                </td>
-                <td style=" width:1%">@Html.DisplayFor(m => item.CreatedDate)</td>
-                <td>
-                    @if (item.ActiveDepartureDate < DateTime.Now.Date)
-                    {
-                        <span title="Süreç tamamlandığı için güncelleme işlemi yapılamaz.">
-                            <a class="btn btn-warning btn-sm btn-rounded disabled" asp-action="Edit" asp-route-id="@item.Id">
-                                <i class="fa-solid fa-pen-to-square"></i> Güncelle
-                            </a>
-                        </span>
-                        <span title="Süreç tamamlandığı için süre uzatma işlemi yapılamaz.">
-                            <a class="btn btn-success btn-sm btn-rounded disabled" asp-action="Extend" asp-route-id="@item.Id" title="Süreç tamamlandığı için süre uzatma işlemi yapılamaz.">
-                                <i class="fa-solid fa-wrench"></i> Süre Uzat
-                            </a>
-                        </span>
-                        <span title="Süreç tamamlandığı için silme işlemi yapılamaz.">
-                            <button type="button" class="btn btn-danger btn-sm btn-rounded" disabled
-                                    data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                    data-file-id="@item.Id" data-file-name="@item.Employee" title="Süreç tamamlandığı için silme işlemi yapılamaz.">
-                                <i class="fa-solid fa-trash"></i> Sil
-                            </button>
-                        </span>
-                    }
-                    else
-                    {
-                        <a class="btn btn-warning btn-sm btn-rounded" asp-action="Edit" asp-route-id="@item.Id" title="Güncelle">
-                            <i class="fa-solid fa-pen-to-square"></i> Güncelle
-                        </a>
-                        <a class="btn btn-success btn-sm btn-rounded" asp-action="Extend" asp-route-id="@item.Id" title="Süre Uzat">
-                            <i class="fa-solid fa-wrench"></i> Süre Uzat
-                        </a>
-                        <button type="button" class="btn btn-danger btn-sm btn-rounded"
-                                data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                data-file-id="@item.Id" data-file-name="@($"{item.Employee} personelinin {item.PlaceGone} görevini")" title="Sil">
-                            <i class="fa-solid fa-trash"></i> Sil
-                        </button>
-                    }
-
-                    @if (extendedTaskId.Contains(item.Id))
-                    {
-                        <a class="btn btn-primary btn-sm btn-rounded"
-                           asp-action="ExtendedTasksOne"
-                           asp-route-id="@item.Id"
-                           title="Geçmiş">
-                            <i class="fa-solid fa-eye"></i> Geçmiş
-                        </a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<!-- Delete Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form method="post" asp-action="Delete">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Silme Onayı</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <strong id="fileName"></strong> silmek istediğinize emin misiniz?
-                    <input type="hidden" name="id" id="fileId" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded" data-bs-dismiss="modal">
-                        <i class="fa-solid fa-xmark" title="İptal"></i> İptal
-                    </button>
-                    <button type="submit" class="btn btn-outline-danger btn-sm btn-rounded" title="Sil">
-                        <i class="fa-solid fa-trash"></i> Sil
-                    </button>
-                </div>
-            </form>
+            <div class="pr-subtitle">
+                Personel görev kayıtlarını takip edin, filtreleyin ve yönetin.
+            </div>
         </div>
+
+        <a asp-action="Create" class="pr-btn pr-btn-primary">
+            <i class="fa-solid fa-plus"></i>
+            Yeni Görev Ekle
+        </a>
     </div>
+
+
+    <!-- Dashboard Metric Cards -->
+    <div class="pr-dashboard-grid">
+
+        <div class="pr-stat-card stat-total">
+            <div class="pr-stat-info">
+                <span class="pr-stat-label">Toplam</span>
+                <span class="pr-stat-value" id="kpiTotal">0</span>
+            </div>
+
+            <div class="pr-stat-icon">
+                <i class="fa-solid fa-folder-open"></i>
+            </div>
+        </div>
+
+
+        <div class="pr-stat-card stat-pending">
+            <div class="pr-stat-info">
+                <span class="pr-stat-label">Devam Eden</span>
+                <span class="pr-stat-value" id="kpiPending">0</span>
+            </div>
+
+            <div class="pr-stat-icon">
+                <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+        </div>
+
+
+        <div class="pr-stat-card stat-completed">
+            <div class="pr-stat-info">
+                <span class="pr-stat-label">Tamamlanan</span>
+                <span class="pr-stat-value" id="kpiCompleted">0</span>
+            </div>
+
+            <div class="pr-stat-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+        </div>
+
+
+        <div class="pr-stat-card stat-today">
+            <div class="pr-stat-info">
+                <span class="pr-stat-label">Bugün Eklenen</span>
+                <span class="pr-stat-value" id="kpiToday">0</span>
+            </div>
+
+            <div class="pr-stat-icon">
+                <i class="fa-solid fa-calendar-day"></i>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Main Table Card -->
+    <div class="pr-table-card">
+
+        <!-- Loading -->
+        <div id="loadingOverlay">
+
+            <div class="pr-skeleton-toolbar">
+                <div class="pr-skeleton-chip"></div>
+                <div class="pr-skeleton-chip"></div>
+                <div class="pr-skeleton-chip"></div>
+            </div>
+
+            @for (var i = 0; i < 5; i++)
+            {
+                <div class="pr-skeleton-row">
+
+                    <div class="pr-skeleton-block pr-skeleton-circle"></div>
+
+                    <div class="pr-skeleton-block"
+                         style="width:25%"></div>
+
+                    <div class="pr-skeleton-block"
+                         style="width:20%"></div>
+
+                    <div class="pr-skeleton-block"
+                         style="width:15%"></div>
+
+                    <div class="pr-skeleton-block"
+                         style="width:30%"></div>
+
+                </div>
+            }
+
+        </div>
+
+
+        <!-- TABLE -->
+        <table class="table pr-table" id="myTable">
+
+            <thead>
+
+                <tr>
+
+                    <th></th>
+
+                    <th>
+                        @Html.DisplayNameFor(m => m.Employee)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(m => m.PlaceGone)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(m => m.ArrivalDate)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(m => m.ActiveDepartureDate)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(m => m.TotalDay)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(m => m.ActiveDescription)
+                    </th>
+
+                    <th>
+                        Durum
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(m => m.CreatedDate)
+                    </th>
+
+                    <th class="text-end">
+                        İşlemler
+                    </th>
+
+                </tr>
+
+
+                <!-- FILTER ROW -->
+                <tr>
+
+                    <th></th>
+
+                    <th>
+                        <input type="text"
+                               class="pr-table-filter"
+                               placeholder="Personel ara..." />
+                    </th>
+
+                    <th>
+                        <input type="text"
+                               class="pr-table-filter"
+                               placeholder="Konum ara..." />
+                    </th>
+
+                    <th>
+                        <input type="text"
+                               class="pr-table-filter"
+                               placeholder="Varış t." />
+                    </th>
+
+                    <th>
+                        <input type="text"
+                               class="pr-table-filter"
+                               placeholder="Ayrılış t." />
+                    </th>
+
+                    <th>
+                        <input type="text"
+                               class="pr-table-filter"
+                               placeholder="Süre..." />
+                    </th>
+
+                    <th>
+                        <input type="text"
+                               class="pr-table-filter"
+                               placeholder="Açıklama ara..." />
+                    </th>
+
+                    <th>
+                        <input type="text"
+                               class="pr-table-filter"
+                               placeholder="Durum..." />
+                    </th>
+
+                    <th>
+                        <input type="text"
+                               class="pr-table-filter"
+                               placeholder="Kayıt t." />
+                    </th>
+
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    var isCompleted =
+                    item.ActiveDepartureDate < DateTime.Now.Date;
+
+                    var createdDateStr =
+                    item.CreatedDate.HasValue
+                    ? item.CreatedDate.Value.ToString("dd.MM.yyyy")
+                    : "";
+
+
+                    <tr data-completed="@isCompleted.ToString().ToLower()"
+                        data-created-date="@createdDateStr">
+
+
+                        <!-- RESPONSIVE CONTROL -->
+                        <td></td>
+
+
+                        <!-- PERSONEL -->
+                        <td>
+
+                            <div class="fw-bold text-dark">
+                                @Html.DisplayFor(m => item.Employee)
+                            </div>
+
+                        </td>
+
+
+                        <!-- GİDİLEN YER -->
+                        <td>
+                            @Html.DisplayFor(m => item.PlaceGone)
+                        </td>
+
+
+                        <!-- VARIŞ -->
+                        <td>
+                            @Html.DisplayFor(m => item.ArrivalDate)
+                        </td>
+
+
+                        <!-- AYRILIŞ -->
+                        <td>
+                            @Html.DisplayFor(m => item.ActiveDepartureDate)
+                        </td>
+
+
+                        <!-- TOPLAM GÜN -->
+                        <td>
+
+                            <span class="pr-badge pr-badge-neutral">
+
+                                <i class="fa-regular fa-clock"></i>
+
+                                @Html.DisplayFor(m => item.TotalDay)
+
+                                Gün
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- AÇIKLAMA -->
+                        <td>
+                            @Html.DisplayFor(m => item.ActiveDescription)
+                        </td>
+
+
+                        <!-- DURUM -->
+                        <td>
+
+                            @if (isCompleted)
+                            {
+                                <span class="pr-badge pr-badge-success">
+
+                                    <i class="fa-solid fa-circle-check"></i>
+
+                                    Tamamlandı
+
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="pr-badge pr-badge-warning">
+
+                                    <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+
+                                    Devam Ediyor
+
+                                </span>
+                            }
+
+                        </td>
+
+
+                        <!-- KAYIT TARİHİ -->
+                        <td>
+                            @Html.DisplayFor(m => item.CreatedDate)
+                        </td>
+
+
+                        <!-- İŞLEMLER -->
+                        <td>
+
+                            <div class="pr-actions-cell justify-content-end">
+
+
+                                <!-- DETAY BUTONU -->
+                                <button type="button"
+                                        class="pr-action-btn pr-action-btn-view btn-task-detail"
+                                        title="Görev Detaylarını Görüntüle"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#taskDetailModal"
+                                        data-employee="@item.Employee"
+                                        data-place="@item.PlaceGone"
+                                        data-arrival="@item.ArrivalDate"
+                                        data-departure="@item.ActiveDepartureDate"
+                                        data-totalday="@item.TotalDay"
+                                        data-description="@item.ActiveDescription"
+                                        data-created="@item.CreatedDate"
+                                        data-status="@(isCompleted ? "Tamamlandı" : "Devam Ediyor")">
+
+                                    <i class="fa-solid fa-eye"></i>
+
+                                </button>
+
+
+                                @if (isCompleted)
+                                {
+                                    <!-- EDIT -->
+                                    <button class="pr-action-btn pr-action-btn-edit disabled"
+                                            disabled
+                                            title="Tamamlanan görev güncellenemez">
+
+                                        <i class="fa-solid fa-pen"></i>
+
+                                    </button>
+
+
+                                    <!-- EXTEND -->
+                                    <button class="pr-action-btn pr-action-btn-extend disabled"
+                                            disabled
+                                            title="Tamamlanan görev uzatılamaz">
+
+                                        <i class="fa-solid fa-calendar-plus"></i>
+
+                                    </button>
+
+
+                                    <!-- DELETE -->
+                                    <button class="pr-action-btn pr-action-btn-delete disabled"
+                                            disabled
+                                            title="Tamamlanan görev silinemez">
+
+                                        <i class="fa-solid fa-trash-can"></i>
+
+                                    </button>
+                                }
+                                else
+                                {
+                                    <!-- EDIT -->
+                                    <a class="pr-action-btn pr-action-btn-edit"
+                                       asp-action="Edit"
+                                       asp-route-id="@item.Id"
+                                       title="Görevi Güncelle">
+
+                                        <i class="fa-solid fa-pen"></i>
+
+                                    </a>
+
+
+                                    <!-- EXTEND -->
+                                    <a class="pr-action-btn pr-action-btn-extend"
+                                       asp-action="Extend"
+                                       asp-route-id="@item.Id"
+                                       title="Süre Uzat">
+
+                                        <i class="fa-solid fa-calendar-plus"></i>
+
+                                    </a>
+
+
+                                    <!-- DELETE -->
+                                    <button type="button"
+                                            class="pr-action-btn pr-action-btn-delete"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-file-id="@item.Id"
+                                            data-file-name="@($"{item.Employee} - {item.PlaceGone}")"
+                                            title="Görevi Sil">
+
+                                        <i class="fa-solid fa-trash-can"></i>
+
+                                    </button>
+                                }
+
+
+                                <!-- UZATMA GEÇMİŞİ -->
+                                @if (extendedTaskId != null &&
+                               extendedTaskId.Contains(item.Id))
+                                {
+                                    <a class="pr-action-btn pr-action-btn-history"
+                                       asp-action="ExtendedTasksOne"
+                                       asp-route-id="@item.Id"
+                                       title="Uzatma Geçmişi">
+
+                                        <i class="fa-solid fa-history"></i>
+
+                                    </a>
+                                }
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 </div>
 
+
+
+<!-- ========================================================= -->
+<!-- GÖREV DETAY MODALI -->
+<!-- ========================================================= -->
+
+<div class="modal fade"
+     id="taskDetailModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered task-detail-dialog">
+
+        <div class="modal-content task-detail-modal">
+
+
+            <!-- HEADER -->
+            <div class="modal-header task-detail-header">
+
+                <div>
+
+                    <div class="task-detail-title">
+
+                        <span class="task-detail-icon">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </span>
+
+                        <div>
+
+                            <h5>
+                                Görev Detayları
+                            </h5>
+
+                            <span>
+                                Görev kayıt bilgileri
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+
+            <!-- BODY -->
+            <div class="modal-body task-detail-body">
+
+
+                <!-- PERSONEL -->
+                <div class="task-detail-main">
+
+                    <div class="task-detail-avatar">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="task-detail-label">
+                            PERSONEL
+                        </div>
+
+                        <div id="detailEmployee"
+                             class="task-detail-employee">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BİLGİ GRID -->
+                <div class="task-detail-grid">
+
+
+                    <!-- GİDİLEN YER -->
+                    <div class="task-detail-item">
+
+                        <div class="task-detail-item-icon">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Gidilen Yer
+                            </span>
+
+                            <strong id="detailPlace">
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- VARIŞ -->
+                    <div class="task-detail-item">
+
+                        <div class="task-detail-item-icon">
+                            <i class="fa-solid fa-plane-arrival"></i>
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Varış Tarihi
+                            </span>
+
+                            <strong id="detailArrival">
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- AYRILIŞ -->
+                    <div class="task-detail-item">
+
+                        <div class="task-detail-item-icon">
+                            <i class="fa-solid fa-plane-departure"></i>
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Ayrılış Tarihi
+                            </span>
+
+                            <strong id="detailDeparture">
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TOPLAM GÜN -->
+                    <div class="task-detail-item">
+
+                        <div class="task-detail-item-icon">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Toplam Süre
+                            </span>
+
+                            <strong id="detailTotalDay">
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- KAYIT TARİHİ -->
+                    <div class="task-detail-item">
+
+                        <div class="task-detail-item-icon">
+                            <i class="fa-regular fa-calendar"></i>
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Kayıt Tarihi
+                            </span>
+
+                            <strong id="detailCreated">
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DURUM -->
+                    <div class="task-detail-item">
+
+                        <div class="task-detail-item-icon">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Durum
+                            </span>
+
+                            <strong id="detailStatus">
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- AÇIKLAMA -->
+                <div class="task-detail-description">
+
+                    <div class="task-detail-description-header">
+
+                        <i class="fa-solid fa-align-left"></i>
+
+                        Açıklama
+
+                    </div>
+
+                    <div id="detailDescription"
+                         class="task-detail-description-content">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- FOOTER -->
+            <div class="modal-footer task-detail-footer">
+
+                <button type="button"
+                        class="pr-btn pr-btn-outline"
+                        data-bs-dismiss="modal">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Kapat
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ========================================================= -->
+<!-- SİLME MODALI -->
+<!-- ========================================================= -->
+
+<div class="modal fade"
+     id="deleteModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content"
+             style="border-radius:12px;border:none;box-shadow:var(--pr-shadow);">
+
+            <form method="post"
+                  asp-action="Delete">
+
+
+                <div class="modal-header"
+                     style="border-bottom:1px solid var(--pr-border);">
+
+                    <h5 class="modal-title fw-bold"
+                        style="font-size:1.1rem;">
+
+                        Görev Kaydını Sil
+
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+
+                <div class="modal-body py-4">
+
+                    <p class="mb-1 text-muted">
+
+                        Aşağıda belirtilen görev kaydı kalıcı olarak silinecektir:
+
+                    </p>
+
+                    <strong id="fileName"
+                            class="text-dark d-block fs-6">
+                    </strong>
+
+                    <input type="hidden"
+                           name="id"
+                           id="fileId" />
+
+                </div>
+
+
+                <div class="modal-footer"
+                     style="border-top:1px solid var(--pr-border);">
+
+                    <button type="button"
+                            class="pr-btn pr-btn-outline"
+                            data-bs-dismiss="modal">
+
+                        Vazgeç
+
+                    </button>
+
+                    <button type="submit"
+                            class="pr-btn pr-btn-danger">
+
+                        Evet, Sil
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
 @section Scripts {
+
     <script src="~/datatable/datatables.min.js"></script>
     <script src="~/datatable/datatables.responsive.min.js"></script>
     <script src="~/datatable/datatables.buttons.min.js"></script>
@@ -220,13 +820,61 @@
     <script src="~/datatable/pdfmake.min.js"></script>
     <script src="~/datatable/vfs_fonts.js"></script>
 
-    <script>
-        // 🔹 Türkçe normalize fonksiyonu
-        function normalizeTr(text) {
-            if (!text) return "";
 
-            return text.toString()
+    <script>
+
+        var prTrLanguage = {
+
+            emptyTable: "Gösterilecek görev kaydı bulunamadı.",
+
+            info: "_TOTAL_ kayıttan _START_ - _END_ arası listeleniyor",
+
+            infoEmpty: "Kayıt yok",
+
+            infoFiltered: "(_MAX_ kayıt içerisinden filtrelendi)",
+
+            lengthMenu: "Sayfada _MENU_ kayıt göster",
+
+            loadingRecords: "Yükleniyor...",
+
+            processing: "İşleniyor...",
+
+            search: "Ara:",
+
+            zeroRecords: "Eşleşen görev kaydı bulunamadı",
+
+            paginate: {
+
+                first:
+                    '<i class="fa-solid fa-angles-left"></i>',
+
+                last:
+                    '<i class="fa-solid fa-angles-right"></i>',
+
+                next:
+                    '<i class="fa-solid fa-chevron-right"></i>',
+
+                previous:
+                    '<i class="fa-solid fa-chevron-left"></i>'
+
+            }
+
+        };
+
+
+        // =====================================================
+        // TÜRKÇE NORMALİZASYON
+        // =====================================================
+
+        function normalizeTr(text) {
+
+            if (!text)
+                return "";
+
+            return text
+                .toString()
                 .toLowerCase()
+
                 .replace(/ı/g, "i")
                 .replace(/İ/g, "i")
                 .replace(/i̇/g, "i")
@@ -235,75 +883,375 @@
                 .replace(/ş/g, "s")
                 .replace(/ö/g, "o")
                 .replace(/ç/g, "c");
+
         }
+
+
+
+        // =====================================================
+        // DASHBOARD METRICS
+        // =====================================================
+
+        function updateDashboardMetrics() {
+
+            var total = 0;
+
+            var pending = 0;
+
+            var completed = 0;
+
+            var todayCount = 0;
+
+
+            var todayStr =
+                new Date().toLocaleDateString(
+                    'tr-TR',
+                    {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    }
+                );
+
+
+            $('#myTable tbody tr').each(function () {
+
+                var isComp =
+                    $(this).attr('data-completed') === 'true';
+
+                var createdDate =
+                    $(this).attr('data-created-date');
+
+
+                total++;
+
+
+                if (isComp)
+                    completed++;
+                else
+                    pending++;
+
+
+                if (
+                    createdDate &&
+                    createdDate.includes(todayStr)
+                )
+                    todayCount++;
+
+            });
+
+
+            $('#kpiTotal').text(total);
+
+            $('#kpiPending').text(pending);
+
+            $('#kpiCompleted').text(completed);
+
+            $('#kpiToday').text(todayCount);
+
+        }
+
+
+
+        // =====================================================
+        // SAYFA HAZIR
+        // =====================================================
 
         $(document).ready(function () {
 
-            // Modal tetikleme
-            $('#deleteModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                $('#fileId').val(button.data('file-id'));
-                $('#fileName').text(button.data('file-name'));
-            });
 
-            // 🔹 Türkçe uyumlu custom search
-            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            updateDashboardMetrics();
 
-                var employeeInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(1) input').val());
-                var placeGoneInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(2) input').val());
-                var arrivalDateInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(3) input').val());
-                var activeDepartureDateInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(4) input').val());
-                var totalDayInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(5) input').val());
-                var descriptionInput = normalizeTr($('#myTable thead tr:eq(1) th:eq(6) input').val());
-                var isCompleted = normalizeTr($('#myTable thead tr:eq(1) th:eq(7) input').val());
-                var createdDate = normalizeTr($('#myTable thead tr:eq(1) th:eq(8) input').val());
 
-                var rowEmployee = normalizeTr(data[1]);   // Personel
-                var rowPlaceGone = normalizeTr(data[2]);  // Gidilen Yer
-                var rowArrivalDate = normalizeTr(data[3]);  // Varış Tarihi
-                var rowActiveDepartureDate = normalizeTr(data[4]);  // Aktif Ayrılış Tarihi
-                var rowTotalDay = normalizeTr(data[5]);  // Toplam Gün
-                var rowDescription = normalizeTr(data[6]); // Açıklama
-                var rowIsCompleted = normalizeTr(data[7]); // Tamamlandı  Mı?
-                var rowCreatedDate = normalizeTr(data[8]); // Tamamlandı  Mı?
 
-                if (employeeInput && !rowEmployee.includes(employeeInput)) return false;
-                if (placeGoneInput && !rowPlaceGone.includes(placeGoneInput)) return false;
-                if (arrivalDateInput && !rowArrivalDate.includes(arrivalDateInput)) return false;
-                if (activeDepartureDateInput && !rowActiveDepartureDate.includes(activeDepartureDateInput)) return false;
-                if (totalDayInput && !rowTotalDay.includes(totalDayInput)) return false;
-                if (descriptionInput && !rowDescription.includes(descriptionInput)) return false;
-                if (isCompleted && !rowIsCompleted.includes(isCompleted)) return false;
-                if (createdDate && !rowCreatedDate.includes(createdDate)) return false;
+            // =================================================
+            // SİLME MODALI
+            // =================================================
 
-                return true;
-            });
+            $('#deleteModal').on(
+                'show.bs.modal',
+                function (event) {
 
-        var table = $('#myTable').DataTable({
-            dom: 'Brtip',
-            buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
-            ordering: false,
-        paging: true,    // 🔥 OLMALI
-        pageLength: 10,
-        info: true,
-            responsive: {
-                details: { type: 'column', target: 0 }
-            },
-            columnDefs: [
-                { className: 'control', orderable: false, targets: 0 },
-                { orderable: false, targets: -1 }
-            ],
-            language: { url: '/datatable/tr.json' },
+                    var button =
+                        $(event.relatedTarget);
 
-        initComplete: function () {
-            $('#loadingOverlay').fadeOut(200);
-        }
+
+                    $('#fileId').val(
+                        button.data('file-id')
+                    );
+
+
+                    $('#fileName').text(
+                        button.data('file-name')
+                    );
+
+                }
+            );
+
+
+
+            // =================================================
+            // GÖREV DETAY MODALI
+            // =================================================
+
+            $('#taskDetailModal').on(
+                'show.bs.modal',
+                function (event) {
+
+                    var button =
+                        $(event.relatedTarget);
+
+
+                    // Personel
+                    $('#detailEmployee').text(
+                        button.attr('data-employee') || '-'
+                    );
+
+
+                    // Gidilen Yer
+                    $('#detailPlace').text(
+                        button.attr('data-place') || '-'
+                    );
+
+
+                    // Varış
+                    $('#detailArrival').text(
+                        button.attr('data-arrival') || '-'
+                    );
+
+
+                    // Ayrılış
+                    $('#detailDeparture').text(
+                        button.attr('data-departure') || '-'
+                    );
+
+
+                    // Toplam Gün
+                    var totalDay =
+                        button.attr('data-totalday');
+
+
+                    $('#detailTotalDay').text(
+                        totalDay
+                            ? totalDay + ' Gün'
+                            : '-'
+                    );
+
+
+                    // Kayıt Tarihi
+                    $('#detailCreated').text(
+                        button.attr('data-created') || '-'
+                    );
+
+
+                    // Durum
+                    var status =
+                        button.attr('data-status') || '-';
+
+
+                    $('#detailStatus').text(status);
+
+
+                    // Durum rengi
+                    $('#detailStatus')
+                        .removeClass(
+                            'task-status-completed task-status-pending'
+                        );
+
+
+                    if (status === 'Tamamlandı') {
+
+                        $('#detailStatus')
+                            .addClass(
+                                'task-status-completed'
+                            );
+
+                    }
+                    else {
+
+                        $('#detailStatus')
+                            .addClass(
+                                'task-status-pending'
+                            );
+
+                    }
+
+
+                    // Açıklama
+                    $('#detailDescription').text(
+                        button.attr('data-description') || 'Açıklama bulunmuyor.'
+                    );
+
+                }
+            );
+
+
+
+            // =================================================
+            // TÜRKÇE ÖZEL FİLTRE
+            // =================================================
+
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+
+                    var inputs =
+                        $('#myTable thead tr:eq(1) th input');
+
+
+                    for (var i = 1; i <= 8; i++) {
+
+                        var val =
+                            normalizeTr(
+                                $(inputs[i - 1]).val()
+                            );
+
+
+                        var cell =
+                            normalizeTr(data[i]);
+
+
+                        if (
+                            val &&
+                            !cell.includes(val)
+                        )
+                            return false;
+
+                    }
+
+
+                    return true;
+
+                }
+            );
+
+
+
+            // =================================================
+            // DATATABLE
+            // =================================================
+
+            var table =
+                $('#myTable').DataTable({
+
+                    dom: 'Brtip',
+
+
+                    buttons: [
+
+                        {
+                            extend: 'copy',
+
+                            text:
+                                '<i class="fa-regular fa-copy me-1"></i> Kopyala'
+                        },
+
+                        {
+                            extend: 'excel',
+
+                            text:
+                                '<i class="fa-regular fa-file-excel me-1"></i> Excel'
+                        },
+
+                        {
+                            extend: 'pdf',
+
+                            text:
+                                '<i class="fa-regular fa-file-pdf me-1"></i> PDF'
+                        },
+
+                        {
+                            extend: 'print',
+
+                            text:
+                                '<i class="fa-solid fa-print me-1"></i> Yazdır'
+                        }
+
+                    ],
+
+
+                    ordering: false,
+
+
+                    paging: true,
+
+
+                    pageLength: 10,
+
+
+                    info: true,
+
+
+                    responsive: {
+
+                        details: {
+
+                            type: 'column',
+
+                            target: 0
+
+                        }
+
+                    },
+
+
+                    columnDefs: [
+
+                        {
+                            className: 'control',
+
+                            orderable: false,
+
+                            targets: 0
+                        },
+
+                        {
+                            orderable: false,
+
+                            targets: -1
+                        }
+
+                    ],
+
+
+                    language: prTrLanguage,
+
+
+                    initComplete: function () {
+
+                        $('#loadingOverlay')
+                            .addClass('pr-hidden');
+
+
+                        setTimeout(function () {
+
+                            $('#loadingOverlay')
+                                .remove();
+
+                        }, 300);
+
+                    }
+
+                });
+
+
+
+            // =================================================
+            // FİLTRE INPUTLARI
+            // =================================================
+
+            $('#myTable thead tr:eq(1) th input')
+                .on(
+                    'keyup change clear',
+                    function () {
+
+                        table.draw();
+
+                    }
+                );
+
+
         });
 
-            // 🔹 Input değişince sadece draw çağır
-            $('#myTable thead tr:eq(1) th input').on('keyup change clear', function () {
-                table.draw();
-            });
-        });
     </script>
+
 }

@@ -7,119 +7,97 @@
 <link href="~/datatable/buttons.datatables.css" rel="stylesheet" />
 <link href="~/datatable/responsive.datatables.min.css" rel="stylesheet" />
 <link href="~/datatable/datatables.min.css" rel="stylesheet" />
+<link href="~/css/personel.css" rel="stylesheet" />
 
-<p>
-    <a asp-action="Create" class="btn btn-primary" title="Yeni Ekle">
-        <i class="fa-solid fa-plus"></i> Yeni Ekle
-    </a>
-</p>
+<div class="pr-page">
 
-<style>
-    .table {
-        font-family: "Segoe UI", Arial, sans-serif;
-        font-size: 14px;
-        color: #333;
-        border-collapse: separate;
-        border-spacing: 0;
-    }
+    <div class="pr-header">
+        <div>
+            <h1 class="pr-title">
+                <span class="pr-title-icon"><i class="fa-solid fa-users"></i></span>
+                Personel Listesi
+            </h1>
+            <div class="pr-subtitle">Tüm personel kayıtlarını görüntüleyin, arayın ve yönetin.</div>
+        </div>
 
-        .table th {
-            background: #f0f2f5;
-            font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
-            padding: 10px;
-            border-bottom: 2px solid #dcdfe3;
-        }
+        <a asp-action="Create" class="pr-btn pr-btn-primary" title="Yeni Ekle">
+            <i class="fa-solid fa-plus"></i> Yeni Ekle
+        </a>
+    </div>
 
-        .table td {
-            font-size: 12px;
-            padding: 8px 10px;
-            vertical-align: middle;
-        }
+    <div class="pr-table-wrap">
 
-        /* Modern input stil */
-        .table input[type="text"] {
-            width: 95%;
-            padding: 6px 10px;
-            border: 1px solid #c4c7cc;
-            border-radius: 6px;
-            font-size: 12px;
-            background: #fff;
-            transition: all .25s ease;
-        }
-
-            /* Hover input */
-            .table input[type="text"]:hover {
-                border-color: #9ba0a8;
-                background: #fafafa;
+        <!-- Yalnızca tablo alanını kaplayan, sayfanın geri kalanını engellemeyen modern iskelet (skeleton) yükleyici -->
+        <div id="loadingOverlay">
+            <div class="pr-skeleton-toolbar">
+                <div class="pr-skeleton-chip"></div>
+                <div class="pr-skeleton-chip"></div>
+                <div class="pr-skeleton-chip"></div>
+                <div class="pr-skeleton-chip"></div>
+                <div class="pr-skeleton-chip"></div>
+            </div>
+            @for (var i = 0; i < 6; i++)
+            {
+                <div class="pr-skeleton-row">
+                    <div class="pr-skeleton-block pr-skeleton-circle"></div>
+                    <div class="pr-skeleton-block" style="width:70%"></div>
+                    <div class="pr-skeleton-block" style="width:55%"></div>
+                    <div class="pr-skeleton-block" style="width:60%"></div>
+                    <div class="pr-skeleton-block" style="width:75%"></div>
+                </div>
             }
+        </div>
 
-            /* Focus efekti */
-            .table input[type="text"]:focus {
-                outline: none;
-                border-color: #4a90e2;
-                box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
-                background: #fff;
-            }
-
-        /* Satır hover */
-        .table tbody tr:hover {
-            background-color: #f7faff;
-        }
-
-    /* Butonlara küçük estetik dokunuş */
-    .btn-rounded {
-        border-radius: 6px !important;
-    }
-
-    /* Tablonun üst kenarına hafif gölge */
-    #myTable {
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        border-radius: 8px;
-        overflow: hidden;
-    }
-</style>
-
-<table class="table table-bordered table-striped" id="myTable">
-    <thead>
-        <tr>
-            <th></th>
-            <th>@Html.DisplayNameFor(m => m.NameSurname)</th>
-            <th>@Html.DisplayNameFor(m => m.Position)</th>
-            <th>@Html.DisplayNameFor(m => m.CreatedDate)</th>
-            <th>İşlemler</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th><input type="text" placeholder="Ara Ad Soyad" /></th>
-            <th><input type="text" placeholder="Ara Pozisyon" /></th>
-            <th><input type="text" placeholder="Ara Kayıt Tarihi" /></th>
-            <th></th> <!-- İşlemler sütunu filtre yok -->
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <th></th>
-                <td>@Html.DisplayFor(m => item.NameSurname)</td>
-                <td>@Html.DisplayFor(m => item.Position)</td>
-                <td>@Html.DisplayFor(m => item.CreatedDate)</td>
-                <td>
-                    <a class="btn btn-warning btn-sm btn-rounded" asp-action="Edit" asp-route-id="@item.Id" title="Güncelle">
-                        <i class="fa-solid fa-pen-to-square"></i> Güncelle
-                    </a>
-                    <button type="button" class="btn btn-danger btn-sm btn-rounded"
-                            data-bs-toggle="modal" data-bs-target="#deleteModal"
-                            data-file-id="@item.Id" data-file-name="@($"{item.NameSurname} personelini")" title="Sil">
-                        <i class="fa-solid fa-trash"></i> Sil
-                    </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <table class="table table-striped pr-table" id="myTable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@Html.DisplayNameFor(m => m.NameSurname)</th>
+                    <th>@Html.DisplayNameFor(m => m.Position)</th>
+                    <th>@Html.DisplayNameFor(m => m.CreatedDate)</th>
+                    <th>İşlemler</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th><input type="text" placeholder="Ara Ad Soyad" /></th>
+                    <th><input type="text" placeholder="Ara Pozisyon" /></th>
+                    <th><input type="text" placeholder="Ara Kayıt Tarihi" /></th>
+                    <th></th> <!-- İşlemler sütunu filtre yok -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th></th>
+                        <td>
+                            <div class="pr-name-cell">
+                                <span class="pr-avatar">
+                                    @(string.IsNullOrWhiteSpace(item.NameSurname) ? "?" : item.NameSurname.Trim().Substring(0, 1).ToUpper())
+                                </span>
+                                @Html.DisplayFor(m => item.NameSurname)
+                            </div>
+                        </td>
+                        <td><span class="pr-badge">@Html.DisplayFor(m => item.Position)</span></td>
+                        <td>@Html.DisplayFor(m => item.CreatedDate)</td>
+                        <td>
+                            <div class="pr-actions-cell">
+                                <a class="pr-btn pr-btn-sm pr-btn-warning" asp-action="Edit" asp-route-id="@item.Id" title="Güncelle">
+                                    <i class="fa-solid fa-pen-to-square"></i> Güncelle
+                                </a>
+                                <button type="button" class="pr-btn pr-btn-sm pr-btn-danger"
+                                        data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                        data-file-id="@item.Id" data-file-name="@($"{item.NameSurname} personelini")" title="Sil">
+                                    <i class="fa-solid fa-trash"></i> Sil
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -135,10 +113,10 @@
                     <input type="hidden" name="id" id="fileId" />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded" data-bs-dismiss="modal">
-                        <i class="fa-solid fa-xmark" title="İptal"></i> İptal
+                    <button type="button" class="pr-btn pr-btn-sm pr-btn-outline" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-xmark"></i> İptal
                     </button>
-                    <button type="submit" class="btn btn-outline-danger btn-sm btn-rounded" title="Sil">
+                    <button type="submit" class="pr-btn pr-btn-sm pr-btn-danger" title="Sil">
                         <i class="fa-solid fa-trash"></i> Sil
                     </button>
                 </div>
@@ -158,6 +136,32 @@
     <script src="~/datatable/vfs_fonts.js"></script>
 
     <script>
+        // 🔹 DataTables Türkçe dil paketi (inline) — harici /datatable/tr.json isteğine bağımlı değil
+        var prTrLanguage = {
+            emptyTable: "Tabloda herhangi bir veri mevcut değil",
+            info: "_TOTAL_ kayıttan _START_ - _END_ arası gösteriliyor",
+            infoEmpty: "Kayıt yok",
+            infoFiltered: "(_MAX_ kayıt içerisinden filtrelendi)",
+            lengthMenu: "Sayfada _MENU_ kayıt göster",
+            loadingRecords: "Yükleniyor...",
+            processing: "İşleniyor...",
+            search: "Ara:",
+            zeroRecords: "Eşleşen kayıt bulunamadı",
+            paginate: {
+                first: "İlk",
+                last: "Son",
+                next: "Sonraki",
+                previous: "Önceki"
+            },
+            buttons: {
+                copy: "Kopyala",
+                excel: "Excel",
+                csv: "CSV",
+                pdf: "PDF",
+                print: "Yazdır"
+            }
+        };
+
         // 🔹 Türkçe normalize fonksiyonu
         function normalizeTr(text) {
             if (!text) return "";
@@ -202,26 +206,37 @@
             });
 
             // DataTable başlat
-        var table = $('#myTable').DataTable({
-            dom: 'Brtip',
-            buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
-            ordering: false,
-        paging: true,    // 🔥 OLMALI
-        pageLength: 10,
-        info: true,
-            responsive: {
-                details: { type: 'column', target: 0 }
-            },
-            columnDefs: [
-                { className: 'control', orderable: false, targets: 0 },
-                { orderable: false, targets: -1 }
-            ],
-            language: { url: '/datatable/tr.json' },
+            var table = $('#myTable').DataTable({
+                dom: 'Brtip',
+                buttons: ['copy', 'excel', 'csv', 'pdf', 'print'],
+                ordering: false,
+                paging: true,
+                pageLength: 10,
+                info: true,
+                responsive: {
+                    details: { type: 'column', target: 0 }
+                },
+                columnDefs: [
+                    { className: 'control', orderable: false, targets: 0 },
+                    { orderable: false, targets: -1 }
+                ],
 
-        initComplete: function () {
-            $('#loadingOverlay').fadeOut(200);
-        }
-        });
+                language: prTrLanguage,
+
+                initComplete: function () {
+                    hideTableSkeleton();
+                }
+            });
+
+            setTimeout(hideTableSkeleton, 1500);
+
+            function hideTableSkeleton() {
+                var $overlay = $('#loadingOverlay');
+                if (!$overlay.hasClass('pr-hidden')) {
+                    $overlay.addClass('pr-hidden');
+                    setTimeout(function () { $overlay.remove(); }, 250);
+                }
+            }
 
             // 🔹 Input değişince sadece draw çağır
             $('#myTable thead tr:eq(1) th input').on('keyup change clear', function () {

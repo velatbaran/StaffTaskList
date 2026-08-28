@@ -3,26 +3,51 @@
     ViewData["Title"] = "Personel Güncelle";
 }
 
-<div class="row">
-    <div class="col-md-8">
+<link href="~/css/personel.css" rel="stylesheet" />
+
+<div class="pr-page">
+
+    <div class="pr-header">
+        <div>
+            <h1 class="pr-title">
+                <span class="pr-title-icon"><i class="fa-solid fa-user-pen"></i></span>
+                Personel Güncelle
+            </h1>
+            <div class="pr-subtitle">Mevcut personel bilgilerini düzenleyin.</div>
+        </div>
+    </div>
+
+    <div class="pr-card pr-form-card">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="pr-validation-summary"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="NameSurname" class="control-label"></label>
-                <input asp-for="NameSurname" class="form-control" />
+
+            <div class="pr-form-group">
+                <label asp-for="NameSurname" class="pr-label"></label>
+                <input asp-for="NameSurname" class="pr-input" autocomplete="off" />
                 <span asp-validation-for="NameSurname" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Position" class="control-label"></label>
-                <input asp-for="Position" class="form-control" />
+
+            <div class="pr-form-group">
+                <label asp-for="Position" class="pr-label"></label>
+                <input asp-for="Position" class="pr-input" autocomplete="off" />
                 <span asp-validation-for="Position" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <button type="submit" value="Güncelle" class="btn btn-outline-success btn-rounded" title="Güncelle"><i class="fa-solid fa-pen-to-square"></i> Güncelle</button>&nbsp;&nbsp;&nbsp;
-                @* <a href="/Users/Index" class="btn btn-outline-secondary btn-rounded" title="İptal"><i class="fa-solid fa-ban"></i> İptal</a> *@
-                <a href="/personeller" class="btn btn-outline-secondary btn-rounded" title="İptal"><i class="fa-solid fa-ban"></i> İptal</a>
+
+            <div class="pr-form-actions">
+                <button type="submit" value="Güncelle" class="pr-btn pr-btn-success" title="Güncelle">
+                    <i class="fa-solid fa-pen-to-square"></i> Güncelle
+                </button>
+                <a href="/personeller" class="pr-btn pr-btn-outline" title="İptal">
+                    <i class="fa-solid fa-ban"></i> İptal
+                </a>
             </div>
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
