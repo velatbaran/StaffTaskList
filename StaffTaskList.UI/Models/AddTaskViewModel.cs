@@ -7,13 +7,14 @@ namespace StaffTaskList.UI.Models
     {
         public int Id { get; set; }
 
-        [DisplayName("Personel")]
-        public int? EmployeeId { get; set; }
+        [DisplayName("Personel"), Required(ErrorMessage = "{0} alanı boş geçilemez!")]
+        public int EmployeeId { get; set; }
 
         [DisplayName("Gidilen Yer"), StringLength(50,ErrorMessage =" Max. {0} karakter olmalıdır."),Required(ErrorMessage ="{0} alanı boş geçilemez!")]
         public string PlaceGone { get; set; }
 
         [DisplayName("Varış Tarihi"), Required(ErrorMessage = "{0} alanı boş geçilemez!")]
+        [DataType(DataType.Date)]
         public DateTime ArrivalDate { get; set; }
 
         [DisplayName("Açıklama")]
@@ -23,6 +24,7 @@ namespace StaffTaskList.UI.Models
         //public DateTime? ActiveDepartureDate { get; set; }
 
         [DisplayName("Ayrılış Tarihi"), Required(ErrorMessage = "{0} alanı boş geçilemez!")]
+        [DataType(DataType.Date)]
         public DateTime NewDepartureDate { get; set; }
 
 

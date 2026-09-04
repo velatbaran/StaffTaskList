@@ -177,7 +177,7 @@ namespace StaffTaskList.UI.Controllers
             var _task = new AddTaskViewModel()
             {
                 Id = taskdeparture.Task.Id,
-                EmployeeId = taskdeparture.Task.EmployeeId,
+                EmployeeId = taskdeparture.Task.EmployeeId ?? 0,
                 PlaceGone = taskdeparture.Task.PlaceGone,
                 ArrivalDate = taskdeparture.Task.ArrivalDate,
                 Description = taskdeparture.Description,
@@ -268,7 +268,7 @@ namespace StaffTaskList.UI.Controllers
             var _task = new AddTaskViewModel()
             {
                 Id = taskdeparture.Task.Id,
-                EmployeeId = taskdeparture.Task.EmployeeId,
+                EmployeeId = taskdeparture.Task.EmployeeId ?? 0,
                 PlaceGone = taskdeparture.Task.PlaceGone,
                 ArrivalDate = taskdeparture.Task.ArrivalDate,
                 NewDepartureDate = taskdeparture.DepartureDate,
