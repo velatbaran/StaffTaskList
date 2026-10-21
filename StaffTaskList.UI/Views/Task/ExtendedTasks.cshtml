@@ -1,326 +1,162 @@
 ﻿@model IEnumerable<TaskViewModel>
-
 @{
     ViewData["Title"] = "Uzatılan Görev Listesi";
 }
-
 <link href="~/datatable/buttons.datatables.css" rel="stylesheet" />
 <link href="~/datatable/responsive.datatables.min.css" rel="stylesheet" />
 <link href="~/datatable/datatables.min.css" rel="stylesheet" />
 <link href="~/css/gorev.css" rel="stylesheet" />
-
 <div class="tg-page">
-
-    ```
-    <!-- ===================================================== -->
-    <!-- SAYFA BAŞLIĞI -->
-    <!-- ===================================================== -->
-
     <div class="tg-header">
-
         <div>
-
             <h1 class="tg-title">
-
                 <span class="tg-title-icon">
                     <i class="fa-solid fa-clock-rotate-left"></i>
                 </span>
-
                 Uzatılan Görevler
-
             </h1>
-
             <div class="tg-subtitle">
                 Süresi uzatılan görev kayıtlarını ve geçmiş işlemlerini görüntüleyin.
             </div>
-
         </div>
-
     </div>
-
-
-    <!-- ===================================================== -->
-    <!-- TABLO -->
-    <!-- ===================================================== -->
-
     <div class="tg-table-wrap">
-
         <table class="table tg-table" id="myTable">
-
             <thead>
-
-                <!-- ================================================= -->
-                <!-- BAŞLIK SATIRI -->
-                <!-- ================================================= -->
-
                 <tr>
-
-                    <!-- RESPONSIVE -->
                     <th></th>
-
-                    <!-- PERSONEL -->
                     <th>
                         @Html.DisplayNameFor(m => m.Employee)
                     </th>
-
-                    <!-- GİDİLEN YER -->
                     <th>
                         @Html.DisplayNameFor(m => m.PlaceGone)
                     </th>
-
-                    <!-- VARIŞ -->
                     <th>
                         @Html.DisplayNameFor(m => m.ArrivalDate)
                     </th>
-
-                    <!-- AYRILIŞ -->
                     <th>
                         @Html.DisplayNameFor(m => m.ActiveDepartureDate)
                     </th>
-
-                    <!-- TOPLAM GÜN -->
                     <th>
                         @Html.DisplayNameFor(m => m.TotalDay)
                     </th>
-
-                    <!-- AÇIKLAMA -->
                     <th>
                         @Html.DisplayNameFor(m => m.ActiveDescription)
                     </th>
-
-                    <!-- KAYIT TARİHİ -->
                     <th>
                         @Html.DisplayNameFor(m => m.CreatedDate)
                     </th>
-
-                    <!-- AKSİYON -->
                     <th>
                         Aksiyon
                     </th>
-
                 </tr>
-
-
-                <!-- ================================================= -->
-                <!-- FİLTRE SATIRI -->
-                <!-- ================================================= -->
-
                 <tr class="tg-filter-row">
-
-                    <!-- RESPONSIVE -->
                     <th></th>
-
-                    <!-- PERSONEL -->
                     <th>
                         <input type="text"
                                class="tg-column-filter"
                                data-column="1"
                                placeholder="Ara Personel" />
                     </th>
-
-                    <!-- GİDİLEN YER -->
                     <th>
                         <input type="text"
                                class="tg-column-filter"
                                data-column="2"
                                placeholder="Ara Gidilen Yer" />
                     </th>
-
-                    <!-- VARIŞ TARİHİ -->
                     <th>
                         <input type="text"
                                class="tg-column-filter"
                                data-column="3"
                                placeholder="Ara Varış Tarihi" />
                     </th>
-
-                    <!-- AYRILIŞ TARİHİ -->
                     <th>
                         <input type="text"
                                class="tg-column-filter"
                                data-column="4"
                                placeholder="Ara Ayrılış Tarihi" />
                     </th>
-
-                    <!-- TOPLAM GÜN -->
                     <th>
                         <input type="text"
                                class="tg-column-filter"
                                data-column="5"
                                placeholder="Ara Toplam Gün" />
                     </th>
-
-                    <!-- AÇIKLAMA -->
                     <th>
                         <input type="text"
                                class="tg-column-filter"
                                data-column="6"
                                placeholder="Ara Açıklama" />
                     </th>
-
-                    <!-- KAYIT TARİHİ -->
                     <th>
                         <input type="text"
                                class="tg-column-filter"
                                data-column="7"
                                placeholder="Ara Kayıt Tarihi" />
                     </th>
-
-                    <!-- AKSİYON -->
                     <th></th>
-
                 </tr>
-
             </thead>
-
-
-            <!-- ===================================================== -->
-            <!-- TABLO BODY -->
-            <!-- ===================================================== -->
-
             <tbody>
-
                 @foreach (var item in Model)
                 {
                     <tr>
-
-                        <!-- RESPONSIVE CONTROL -->
                         <td></td>
-
-
-                        <!-- ================================================= -->
-                        <!-- PERSONEL -->
-                        <!-- ================================================= -->
-
                         <td>
-
                             <div class="tg-person-cell">
-
                                 <span class="tg-avatar">
-
                                     @(string.IsNullOrWhiteSpace(item.Employee)
                                         ? "?"
                                         : item.Employee.Trim().Substring(0, 1).ToUpper())
-
                                 </span>
-
                                 <span class="tg-person-name">
                                     @item.Employee
                                 </span>
-
                             </div>
-
                         </td>
-
-
-                        <!-- ================================================= -->
-                        <!-- GİDİLEN YER -->
-                        <!-- ================================================= -->
-
                         <td>
-
                             <span class="tg-location">
-
                                 <i class="fa-solid fa-location-dot"></i>
-
                                 @item.PlaceGone
-
                             </span>
-
                         </td>
-
-
-                        <!-- ================================================= -->
-                        <!-- VARIŞ -->
-                        <!-- ================================================= -->
-
                         <td>
-
                             <span class="tg-date">
                                 @item.ArrivalDate
                             </span>
-
                         </td>
-
-
-                        <!-- ================================================= -->
-                        <!-- AYRILIŞ -->
-                        <!-- ================================================= -->
-
                         <td>
-
                             <span class="tg-date tg-date-success">
                                 @item.ActiveDepartureDate
                             </span>
-
                         </td>
-
-
-                        <!-- ================================================= -->
-                        <!-- TOPLAM GÜN -->
-                        <!-- ================================================= -->
-
                         <td>
-
                             <span class="tg-day-badge tg-day-success">
                                 @item.TotalDay gün
                             </span>
-
                         </td>
-
-
-                        <!-- ================================================= -->
-                        <!-- AÇIKLAMA -->
-                        <!-- ================================================= -->
-
                         <td>
-
                             <span class="tg-description">
                                 @item.ActiveDescription
                             </span>
-
                         </td>
-
-
-                        <!-- ================================================= -->
-                        <!-- KAYIT TARİHİ -->
-                        <!-- ================================================= -->
-
                         <td>
-
                             <span class="tg-created-date">
                                 @item.CreatedDate
                             </span>
-
                         </td>
-
-
-                        <!-- ================================================= -->
-                        <!-- AKSİYON -->
-                        <!-- ================================================= -->
-
                         <td>
-
                             <div class="tg-actions-cell">
-
-                                <!-- GEÇMİŞ -->
                                 <a class="tg-btn tg-btn-history"
                                    asp-action="ExtendedTasksOne"
                                    asp-route-id="@item.Id"
                                    title="Görev geçmişini görüntüle">
-
                                     <i class="fa-solid fa-clock-rotate-left"></i>
-
                                     Geçmiş
-
                                     <span class="tg-count">
                                         @item.ExtensionCount
                                     </span>
-
                                 </a>
-
-
-                                <!-- DETAY -->
                                 <button type="button"
                                         class="tg-detail-btn"
                                         title="Görev detaylarını görüntüle"
@@ -333,322 +169,148 @@
                                         data-totalday="@item.TotalDay"
                                         data-description="@item.ActiveDescription"
                                         data-created="@item.CreatedDate">
-
                                     <i class="fa-solid fa-eye"></i>
-
                                 </button>
-
                             </div>
-
                         </td>
-
                     </tr>
                 }
-
             </tbody>
-
         </table>
-
     </div>
-    ```
-
 </div>
-
-<!-- ========================================================= -->
-<!-- GÖREV DETAY MODALI -->
-<!-- ========================================================= -->
-
 <div class="modal fade"
      id="taskDetailModal"
      tabindex="-1"
      aria-hidden="true">
-
-    ```
     <div class="modal-dialog modal-dialog-centered modal-lg">
-
         <div class="modal-content task-detail-modal">
-
-
-            <!-- ================================================= -->
-            <!-- HEADER -->
-            <!-- ================================================= -->
-
             <div class="modal-header task-detail-header">
-
                 <div class="task-detail-title">
-
                     <span class="task-detail-icon">
-
                         <i class="fa-solid fa-clipboard-list"></i>
-
                     </span>
-
                     <div>
-
                         <h5>
                             Görev Detayları
                         </h5>
-
                         <span>
                             Uzatılan görev kayıt bilgileri
                         </span>
-
                     </div>
-
                 </div>
-
-
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Kapat">
                 </button>
-
             </div>
-
-
-
-            <!-- ================================================= -->
-            <!-- BODY -->
-            <!-- ================================================= -->
-
             <div class="modal-body task-detail-body">
-
-
-                <!-- ================================================= -->
-                <!-- PERSONEL -->
-                <!-- ================================================= -->
-
                 <div class="task-detail-main">
-
                     <div class="task-detail-avatar">
-
                         <i class="fa-solid fa-user"></i>
-
                     </div>
-
                     <div>
-
                         <div class="task-detail-label">
                             PERSONEL
                         </div>
-
                         <div id="detailEmployee"
                              class="task-detail-employee">
                         </div>
-
                     </div>
-
                 </div>
-
-
-
-                <!-- ================================================= -->
-                <!-- BİLGİLER -->
-                <!-- ================================================= -->
-
                 <div class="task-detail-grid">
-
-
-                    <!-- GİDİLEN YER -->
-
                     <div class="task-detail-item">
-
                         <div class="task-detail-item-icon">
-
                             <i class="fa-solid fa-location-dot"></i>
-
                         </div>
-
                         <div>
-
                             <span>
                                 Gidilen Yer
                             </span>
-
                             <strong id="detailPlace"></strong>
-
                         </div>
-
                     </div>
-
-
-
-                    <!-- VARIŞ -->
-
                     <div class="task-detail-item">
-
                         <div class="task-detail-item-icon">
-
                             <i class="fa-solid fa-plane-arrival"></i>
-
                         </div>
-
                         <div>
-
                             <span>
                                 Varış Tarihi
                             </span>
-
                             <strong id="detailArrival"></strong>
-
                         </div>
-
                     </div>
-
-
-
-                    <!-- AYRILIŞ -->
-
                     <div class="task-detail-item">
-
                         <div class="task-detail-item-icon">
-
                             <i class="fa-solid fa-plane-departure"></i>
-
                         </div>
-
                         <div>
-
                             <span>
                                 Ayrılış Tarihi
                             </span>
-
                             <strong id="detailDeparture"></strong>
-
                         </div>
-
                     </div>
-
-
-
-                    <!-- TOPLAM GÜN -->
-
                     <div class="task-detail-item">
-
                         <div class="task-detail-item-icon">
-
                             <i class="fa-regular fa-clock"></i>
-
                         </div>
-
                         <div>
-
                             <span>
                                 Toplam Süre
                             </span>
-
                             <strong id="detailTotalDay"></strong>
-
                         </div>
-
                     </div>
-
-
-
-                    <!-- KAYIT TARİHİ -->
-
                     <div class="task-detail-item">
-
                         <div class="task-detail-item-icon">
-
                             <i class="fa-regular fa-calendar"></i>
-
                         </div>
-
                         <div>
-
                             <span>
                                 Kayıt Tarihi
                             </span>
-
                             <strong id="detailCreated"></strong>
-
                         </div>
-
                     </div>
-
-
-
-                    <!-- DURUM -->
-
                     <div class="task-detail-item">
-
                         <div class="task-detail-item-icon">
-
                             <i class="fa-solid fa-circle-check"></i>
-
                         </div>
-
                         <div>
-
                             <span>
                                 Durum
                             </span>
-
                             <strong class="task-status-success">
                                 Uzatıldı
                             </strong>
-
                         </div>
-
                     </div>
-
                 </div>
-
-
-
-                <!-- ================================================= -->
-                <!-- AÇIKLAMA -->
-                <!-- ================================================= -->
-
                 <div class="task-detail-description">
-
                     <div class="task-detail-description-header">
-
                         <i class="fa-solid fa-align-left"></i>
-
                         Açıklama
-
                     </div>
-
                     <div id="detailDescription"
                          class="task-detail-description-content">
                     </div>
-
                 </div>
-
             </div>
-
-
-
-            <!-- ================================================= -->
-            <!-- FOOTER -->
-            <!-- ================================================= -->
-
             <div class="modal-footer task-detail-footer">
-
                 <button type="button"
                         class="pr-btn pr-btn-outline"
                         data-bs-dismiss="modal">
-
                     <i class="fa-solid fa-xmark"></i>
-
                     Kapat
-
                 </button>
-
             </div>
-
         </div>
-
     </div>
-    ```
-
 </div>
-
 @section Scripts {
-
     <script src="~/datatable/datatables.min.js"></script>
     <script src="~/datatable/datatables.responsive.min.js"></script>
     <script src="~/datatable/datatables.buttons.min.js"></script>
@@ -657,15 +319,10 @@
     <script src="~/datatable/jszip.min.js"></script>
     <script src="~/datatable/pdfmake.min.js"></script>
     <script src="~/datatable/vfs_fonts.js"></script>
-
-
     <script>
-
         function normalizeTr(text) {
-
             if (text === null || text === undefined)
                 return "";
-
             return text
                 .toString()
                 .toLocaleLowerCase("tr-TR")
@@ -678,45 +335,28 @@
                 .replace(/İ/g, "i")
                 .replace(/i̇/g, "i")
                 .trim();
-
         }
-
         $(document).ready(function () {
-
             var table = $('#myTable').DataTable({
-
                 dom: 'Brtip',
-
                 buttons: [
-
                     'copy',
                     'excel',
                     'csv',
                     'pdf',
                     'print'
-
                 ],
                 ordering: false,
-
                 paging: true,
-
                 pageLength: 10,
-
                 info: true,
-
                 responsive: {
-
                     details: {
-
                         type: 'column',
-
                         target: 0
-
                     }
-
                 },
                 columnDefs: [
-
                     {
                         className: 'control',
                         orderable: false,
@@ -728,124 +368,74 @@
                     }
                 ],
                 language: {
-
                     url: '/datatable/tr.json'
                 }
             });
-
             $('#myTable .tg-column-filter').on(
                 'keyup change clear input',
                 function () {
-
                     var columnIndex = $(this).data('column');
-
                     var value = normalizeTr($(this).val());
-
-
                     table
                         .column(columnIndex)
                         .search(value, false, false)
                         .draw();
-
                 }
             );
-            // =====================================================
-            // ENTER TUŞU
-            // =====================================================
-
             $('#myTable .tg-column-filter').on(
                 'keypress',
                 function (e) {
-
                     if (e.which === 13) {
-
                         e.preventDefault();
-
                         var columnIndex =
                             $(this).data('column');
-
                         var value =
                             normalizeTr($(this).val());
-
                         table
                             .column(columnIndex)
                             .search(value, false, false)
                             .draw();
-
                     }
-
                 }
             );
-
-            // =====================================================
-            // DETAY MODALI
-            // =====================================================
-
             $('#taskDetailModal').on(
                 'show.bs.modal',
                 function (event) {
-
                     var button =
                         $(event.relatedTarget);
-                    // PERSONEL
                     $('#detailEmployee').text(
-
                         button.attr('data-employee')
                             || '-'
-
                     );
-                    // GİDİLEN YER
                     $('#detailPlace').text(
-
                         button.attr('data-place')
                             || '-'
-
                     );
-                    // VARIŞ
                     $('#detailArrival').text(
-
                         button.attr('data-arrival')
                             || '-'
                     );
-                    // AYRILIŞ
                     $('#detailDeparture').text(
-
                         button.attr('data-departure')
                             || '-'
-
                     );
-                    // TOPLAM GÜN
                     var totalDay =
                         button.attr('data-totalday');
-
-
                     $('#detailTotalDay').text(
-
                         totalDay
                             ? totalDay + ' Gün'
                             : '-'
-
                     );
-                    // KAYIT TARİHİ
                     $('#detailCreated').text(
-
                         button.attr('data-created')
                             || '-'
-
                     );
-                    // AÇIKLAMA
                     $('#detailDescription').text(
-
                         button.attr('data-description')
                             || 'Açıklama bulunmuyor.'
-
                     );
-
                 }
             );
         });
-
     </script>
-```
-
 }
